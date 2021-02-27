@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userStatusSql">
+	
+	<insert id="userStatusInsert" parameterType="map">
+		INSERT INTO person_info(
+			sabun,
+			password,
+			user_nm,
+			birth_num,
+			email,
+			phonenum,
+			user_position,
+			team_nm
+		)
+		VALUES(
+			#{sabun},
+			#{password},
+			#{user_nm},
+			#{birth_num},
+			#{email},
+			#{phonenum},
+			#{user_position},
+			#{team_nm}
+		);
+	</insert>
+	
+	<select id="getUserListSelect" resultType="map">
+		select 
+			SABUN 
+			,replace (USER_NM, substr(USER_NM, 2,1), '*' ) as USER_NM
+			,cc.DC as USER_POSITION
+			, TEAM_NM 
+			, PHONENUM 
+		from person_info pi 
+		join common_code cc 
+		ON pi.USER_POSITION = cc.CODE
+		where DEL_YN = 'N'
+		order by cc.CODE desc
+	</select>
+	
+	<select id="getUserSabun" parameterType="map" resultType="map">
+		select 
+			SABUN 
+			,PASSWORD
+			,USER_NM 
+			,BIRTH_NUM 
+			,PHONENUM 
+			,USER_POSITION 
+			,TEAM_NM 
+			,EMAIL 
+		from person_info
+		where  SABUN = #{userSabun}
+	</select>
+	
+	<update id="userUpdate" parameterType="map">
+		update person_info set
+			SABUN = #{sabun}
+			,PASSWORD = #{password}
+			,USER_NM  = #{user_nm}
+			,BIRTH_NUM = #{birth_num}
+			,PHONENUM = #{phonenum}
+			,USER_POSITION = #{user_position}
+			,TEAM_NM = #{team_nm}
+			,EMAIL = #{email}
+		where SABUN = #{sabun}
+	</update>
+	
+	<update id="userDelete" parameterType="map">
+		update person_info set
+			DEL_YN = 'Y'
+		where SABUN = #{sabun}
+	</update>
+	
+	<update id="userPwdReset" parameterType="map">
+		update person_info set
+			PASSWORD = #{password}
+		where SABUN = #{sabun}
+	</update>
+</mapper>

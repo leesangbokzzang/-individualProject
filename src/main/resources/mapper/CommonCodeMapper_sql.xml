@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="codeSql">
+
+	<!-- 직위 셀렉트박스 P00000 -->
+	<select id="getPositionFG" resultType="map">
+		SELECT 
+			CODE, DC
+		FROM COMMON_CODE
+		WHERE FG = 'P00000'
+	</select>
+	
+	<!-- 부서 셀렉트박스 T00000 -->
+	<select id="getTeamFG" resultType="map">
+		SELECT 
+			CODE, DC
+		FROM COMMON_CODE
+		WHERE FG = 'T00000'
+	</select>
+</mapper>
