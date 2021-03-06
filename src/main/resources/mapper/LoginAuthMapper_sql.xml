@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userLogin">
+	<select id="loginAuths" parameterType="String" resultType="com.sang.bok.vo.UserVO">
+		<![CDATA[
+			SELECT 
+				  sabun
+				, password
+				, user_nm
+				, birth_num
+				, email
+				, phonenum
+				, cc.dc as user_position
+				, team_nm
+				, grade
+				, del_yn
+			FROM person_info pi
+			LEFT OUTER JOIN common_code cc
+			ON pi.user_position = cc.code
+			WHERE sabun = #{user_id}
+		]]>
+	</select>
+	
+</mapper>

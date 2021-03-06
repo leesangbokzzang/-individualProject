@@ -3,7 +3,7 @@
 <div class="lnb-wrap">
             <div class="lnb-logo">
                 <p>
-                    <a href="/" title="홈 바로가기">
+                    <a href="/main.do" title="홈 바로가기">
                         <img src="../../resources/img/common/hcnc-logo2.png" alt="HCNC 로고">
                     </a>
                 </p>
@@ -13,10 +13,9 @@
             </div>
             <div class="lnb-menu">
                 <ul>
-                    <li class="on">
+                    <li class="">
                         <a href="#" title="작성" class="lnb-dep1 on">작성</a>
-                        <ul class="lnb-dep2 on">
-                            <li class="on"><a href="#" title="결재양식">결재양식</a></li>
+                        <ul class="lnb-dep2 ">
                             <li><a href="#" title="결재현황">결재현황</a></li>
                         </ul>
                     </li>

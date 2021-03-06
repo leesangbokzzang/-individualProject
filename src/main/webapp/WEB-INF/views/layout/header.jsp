@@ -43,7 +43,14 @@
      };
      
      $(function(){
+    	 
+    	 //사용자현황
     	 $( "#birth_num" ).datepicker();
+    	 
+    	 //휴가신청서 
+    	 $( "#regDate1" ).datepicker();
+    	 $( "#regDate2" ).datepicker();
+    	 
      })
      
      $.datepicker.setDefaults({

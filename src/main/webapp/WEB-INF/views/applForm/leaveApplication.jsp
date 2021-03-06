@@ -13,32 +13,17 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" title="작성">
-                                작성
-                            </a>
+                            <a href="#" title="작성">작성</a>
                         </li>
                         <li>
-                            <a href="#" title="결재양식">
-                                결재양식
-                            </a>
+                            <a href="#" title="결재양식">결재양식</a>
                         </li>
                         <li>
-                            <a href="#" title="휴가신청서 작성">
-                                휴가신청서
-                            </a>
+                            <a href="#" title="휴가신청서 작성">휴가신청서</a>
                         </li>
                     </ul>
                 </div>
-                <div class="user-wrap">
-                    <ul>
-                        <li><img src="../../resources/img/common/icon-user.png" alt="user-icon"></li>
-                        <li>
-                            <p>디자인팀</p>
-                            <p>이상복</p>
-                        </li>
-                        <li><a href="#" title="로그아웃"><img src="../../resources/img/common/ico-logout.png" alt="로그아웃"></a></li>
-                    </ul>
-                </div>
+                <%@ include file="../layout/sub-header.jsp"%>
             </div>
             <!--//main-title-->
             <div class="sub-container">
@@ -60,13 +45,13 @@
                                     <tbody>
                                         <tr>
                                             <th>소속</th>
-                                            <td>디자인팀</td>
+                                            <td>${team_nm}</td>
                                             <th>사번</th>
-                                            <td>19-20190916</td>
+                                            <td>${sabun}</td>
                                         </tr>
                                         <tr>
                                             <th>성명</th>
-                                            <td>한서연</td>
+                                            <td>${user_name}</td>
                                             <th>담당업무</th>
                                             <td>
                                                 <label for="" class="hide"></label>
@@ -75,9 +60,9 @@
                                         </tr>
                                         <tr>
                                             <th>직위</th>
-                                            <td>대리</td>
+                                            <td>${user_position}</td>
                                             <th>업무인수자</th>
-                                            <td>강길동</td>
+                                            <td><input type="text"></td>
                                         </tr>
                                         <tr>
                                             <th>종류</th>
@@ -109,10 +94,10 @@
                                             <th>기간</th>
                                             <td colspan="3">
                                                 <label for="" class="hide">시작일</label>
-                                                <input type="date" id="regDate1" name="regDate1" onchange="call()" class="w140">
+                                                <input type="text" id="regDate1" name="regDate1" onchange="call()" class="w140 datapicker">
                                                 <span>~</span>
                                                 <label for="" class="hide">종료일</label>
-                                                <input type="date" id="regDate2" name="regDate2" onchange="call()" class="w140">
+                                                <input type="text" id="regDate2" name="regDate2" onchange="call()" class="w140 datapicker">
                                                 <label for="" class="hide">총 일수</label>
                                                 <input type="text" id="days" name="" class="w46 mg-l10 ta-c readonly" readonly="">
                                             </td>

@@ -187,8 +187,8 @@
             
             //sdd 날짜가 edd 보다 높을 경우 error창을 띄우고 날짜, 휴가합계값 초기화 스크립트
             if(da1 > da2){
-                document.getElementById('regDate1').value = new Date().toISOString().substring();
-				document.getElementById('regDate2').value = new Date().toISOString().substring();
+            	$("#regDate1").val("");
+            	$("#regDate2").val("");
                 document.getElementById('days').value = String(0);
                 alert("값이 올바르지 않습니다. 날짜를 다시 선택 해주세요.");
             }

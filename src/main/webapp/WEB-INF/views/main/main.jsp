@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ include file="../layout/header.jsp"%>
     <div class="sub-main-wrap">
         <%@ include file="../layout/leftMenu.jsp"%>
@@ -14,17 +15,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="user-wrap">
-                    <ul>
-                        <li><img src="../../resources/img/common/icon-user.png" alt="user-icon"></li>
-                        <li>
-                            <p>디자인팀</p>
-                            <p>한서연</p>
-                        </li>
-                        <li><a href="#" title="로그아웃"><img src="../../resources/img/common/ico-logout.png" alt="로그아웃"></a></li>
-                    </ul>
-                </div>
+                <%@ include file="../layout/sub-header.jsp"%>
             </div><!--//main-title-->
+            
             <div class="sub-container">
                 <div class="top-cont-wrap">
                     <div class="waitrev-box boxsize">
@@ -48,7 +41,7 @@
                         <div class="application-box">
                             <p class="text-tail-img"></p>
                             <ul>
-                                <li><a href="leaveApplication.do" title="연차신청">연차신청</a></li>
+                                <li><a href="/leaveApplication.do" title="연차신청">연차신청</a></li>
                                 <li><a href="#" title="명함신청">명함신청</a></li>
                                 <li><a href="#" title="닫기" class="application-cancel">닫기</a></li>
                             </ul>

@@ -21,14 +21,14 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	
-	@RequestMapping(value = "main.do", method = RequestMethod.GET)
-	public ModelAndView mainMove(){
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("main/main");
-		return mav;
-		
-	}
+//	@RequestMapping(value = "main.do", method = RequestMethod.GET)
+//	public ModelAndView mainMove(){
+//		ModelAndView mav = new ModelAndView();
+//		
+//		mav.setViewName("main/main");
+//		return mav;
+//		
+//	}
 	
 	
 }

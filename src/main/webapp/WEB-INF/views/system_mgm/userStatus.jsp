@@ -3,7 +3,14 @@
 
 <%@ include file="../layout/header.jsp"%>
 <script>
-
+$(function(){
+	
+	//로그인한 유저의 권한을 확인 후 관리자가 아니면 이전페이지로  //관리자는 = 1, 일반사용자 = 0 
+	if(${grade} != 0){//임시로 0으로 함
+		alert("현재 페이지에 접근할 수 없습니다.");
+		location.href= history.back();
+	}
+});
 //::::::사번코드 생성 스크립트
 function uuidv4() {
 	  return 'Hxxxxxxx'.replace(/[xy]/g, 
@@ -86,10 +93,11 @@ function userUpdate(){
 		dataType : 'json',
 		data : jsondata,
 		success : function(result){
-			alert("수정을 하였습니다.");
+			
 			$("#btnUserInsert").show();
 			$("#password").attr('readonly', true);
 			$("#password").css("background", "#f5f5f5");
+			alert("수정을 하였습니다.");
 			formReset();
 		},
 		error : function(error){
@@ -247,16 +255,7 @@ function NoMultiChk(chk){
                         </li>
                     </ul>
                 </div>
-                <div class="user-wrap">
-                    <ul>
-                        <li><img src="../../resources/img/common/icon-user.png" alt="user-icon"></li>
-                        <li>
-                            <p>디자인팀</p>
-                            <p>홍길동</p>
-                        </li>
-                        <li><a href="#" title="로그아웃"><img src="../../resources/img/common/ico-logout.png" alt="로그아웃"></a></li>
-                    </ul>
-                </div>
+                <%@ include file="../layout/sub-header.jsp"%>
             </div>
             <!--//main-title-->
             <div class="sub-container">
@@ -335,7 +334,7 @@ function NoMultiChk(chk){
                                             <th>생년월일</th>
                                             <td>
                                                 <label for="" class="hide">생년월일</label>
-                                                <input type="text" id="birth_num" name="birth_num" class="birth_num wp40">
+                                                <input type="text" id="birth_num" name="birth_num" class="datapicker wp40">
                                             </td>
                                             <th>이메일</th>
                                             <td>
