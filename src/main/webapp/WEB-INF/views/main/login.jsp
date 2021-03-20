@@ -3,27 +3,6 @@
 <%@ include file="../layout/header.jsp"%>
 
 <script>
-// function loginBtn(){
-// 	var sabun = $("#sabun").val();
-// 	var formdate =$("form[name=userLoginFm]").serializeObject();
-	
-// 	$.ajax({
-// 		url : 'userLoginFm.do',
-// 		type : 'POST',
-// 		contentType : "application/json;charset=utf-8",
-// 		dataType : 'json',
-// 		data : jsondata,
-// 		success : function(result){
-// 			alert("로그인 성공");
-			
-// 		},
-// 		error : function(error){
-// 			alert("ERROR :: " + error);
-// 		}
-// 	})
-// }
-
-
 
 </script>
 <!-- 로그인 접속 실패시 뜨는 안내문 -->
@@ -43,10 +22,11 @@
 <div class="main-wrap">
         <div class="login-wrap">
             <div class="left-box">
-                <h1>HAPS 결재시스템</h1>
-                <p>HCNC APPROVAL SYSTEM</p>
+                <h1>SBTECK 결재시스템</h1>
+                <p>SBTECK APPROVAL SYSTEM</p>
                 <div class="logo">
-                    <img src="../../resources/img/common/hcnc-logo-w.png" class="logo" alt="hcnc 로고">
+<!--                     <img src="../../resources/img/common/hcnc-logo-w.png" class="logo" alt="hcnc 로고"> -->
+						<h2>SBTECK</h2>
                 </div>
             </div>
             <div class="right-box">
@@ -74,7 +54,7 @@
             </form>
                 <p class="login-guid">*사번 또는 비밀번호를 찾을 시 관리자에게 문의주세요.</p>
                 <div class="copy">
-                    Copyright © HCNC Corp. All rights Reserved.
+                    Copyright © SBTECK Corp. All rights Reserved.
                 </div>
             </div>
         </div>

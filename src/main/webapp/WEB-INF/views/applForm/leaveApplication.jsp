@@ -1,6 +1,107 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ include file="../layout/header.jsp"%>
+<script>
+	$(function(){
+		
+		//현재날짜 구하기
+		var today = new Date();
+		var year  = today.getFullYear();
+		var month = today.getMonth()+1;
+		var day   = today.getDate();
+		
+		$("#year_txt").html(year+" 년");
+		$("#month_txt").html(month+" 월");
+		$("#day_txt").html(day+" 일");
+		$("#today_time").html(year + ". " + month + ". " + day);
+		
+	});
+	
+	//검토자선택 스크립트
+	function reviewer_sel(){
+		var checkbox = $("input[name=userChekBox]:checked"); //체크된 checkbox
+		var tr;
+		var td;
+		checkbox.each(function(i){
+			tr = checkbox.parent().parent(); //체크박스인풋의 부모에 부모요소인 tr선택
+			td = tr.children() // tr에 바로다음에 자식요소 td
+		});
+		var sel_name = td.eq(1).text();
+		
+		var sessionName = "<c:out value='${user_name} ${user_position}'/>";
+		
+		if(sessionName == sel_name){
+			alert("자신을 선택할 수 없습니다.");
+			return false;
+		}
+		
+		var name_label = "<li>"+sel_name+" <a href='javascript:label_delete(1)' title='삭제'><img src='../../resources/img/sub/btn-selectname-delete.png' alt='삭제'></a></li>";
+		$(".modal-selectname-reviewer > ul").html(name_label);
+	}
+	
+	//승인자선택 스크립트
+	function approver_sel(){
+		var checkbox = $("input[name=userChekBox]:checked"); //체크된 checkbox
+		var tr;
+		var td;
+		checkbox.each(function(i){
+			tr = checkbox.parent().parent(); //체크박스인풋의 부모에 부모요소인 tr선택
+			td = tr.children() // tr에 바로다음에 자식요소 td
+		});
+		var sel_name = td.eq(1).text();
+		
+		var sessionName = "<c:out value='${user_name} ${user_position}'/>";
+		
+		if(sessionName == sel_name){
+			alert("자신을 선택할 수 없습니다.");
+			return false;
+		}
+		
+		var name_label = "<li>"+sel_name+" <a href='javascript:label_delete(2)' title='삭제'><img src='../../resources/img/sub/btn-selectname-delete.png' alt='삭제'></a></li>";
+		$(".modal-selectname-approver > ul").html(name_label);
+	}
+	
+	//검토자, 승인자 삭제 스크립트	
+	function label_delete(num){
+		if(num == 1){ //num이 1이면 reviewer label 삭제
+			$(".modal-selectname-reviewer > ul").html("");
+		}else if(num == 2){ //num이 2이면 approver label 삭제
+			$(".modal-selectname-approver > ul").html("");
+		}
+	}
+	
+	// 검토/승인자 선택 모달창에서 확인버튼 스크립트
+	function selOkSend(){
+		if($(".modal-selectname-reviewer > ul").html() == ""){
+			alert("검토자를 선택하십시오.");
+			return false;
+		}else if($(".modal-selectname-approver > ul").html() == ""){
+			alert("승인자를 선택하십시오.");
+			return false;
+		}
+		
+		var label1 = $(".modal-selectname-reviewer > ul > li").html().substr(0, 7);
+		var label2 = $(".modal-selectname-approver > ul > li").html().substr(0, 7);
+		
+		$("#reviewer_person").html(label1);
+		$("#approver_person").html(label2);
+ 	    $(".modal-wrap").hide();
+ 	   	$(".modal-selectname-reviewer > ul").html("");
+		$(".modal-selectname-approver > ul").html("");
+		
+	}
+	
+	//::::::checkbox중복방지
+	function NoMultiChk(chk){
+	    var obj = document.getElementsByName("userChekBox");
+	    for(var i=0; i < obj.length; i++){
+	        if(obj[i] != chk){
+	            obj[i].checked = false;
+	        }
+	    }
+	}
+</script>
     <div class="sub-main-wrap">
     <%@ include file="../layout/leftMenu.jsp"%>
         <div class="sub-container-wrap">
@@ -68,17 +169,17 @@
                                             <th>종류</th>
                                             <td colspan="3">
                                                 <div class="btn-radio">
-                                                    <input type="radio" name="test" id="test01" checked="">
+                                                    <input type="radio" name="vacationType" id="test01" value="연차" checked="">
                                                     <label for="test01">연차</label>
-                                                    <input type="radio" name="test" id="test02">
+                                                    <input type="radio" name="vacationType" id="test02" value="월차">
                                                     <label for="test02">월차</label>
-                                                    <input type="radio" name="test" id="test03">
-                                                    <label for="test03">반차,지각</label>
-                                                    <input type="radio" name="test" id="test04">
+                                                    <input type="radio" name="vacationType" id="test03" value="반차">
+                                                    <label for="test03">반차</label>
+                                                    <input type="radio" name="vacationType" id="test04" value="훈련,교육">
                                                     <label for="test04">훈련,교육</label>
-                                                    <input type="radio" name="test" id="test05">
+                                                    <input type="radio" name="vacationType" id="test05" value="경조">
                                                     <label for="test05">경조</label>
-                                                    <input type="radio" name="test" id="test06">
+                                                    <input type="radio" name="vacationType" id="test06" value="기타">
                                                     <label for="test06">기타(생휴)</label>
                                                 </div>
                                             </td>
@@ -106,7 +207,7 @@
                                             <th>비상 연락망</th>
                                             <td colspan="3">
                                             	<label for="" class="hide">비상 연락망</label>
-                                                <input type="text" maxlength="12" class="num w180" placeholder="' - ' 뺴고 입력해주세요.">
+                                                <input type="text" maxlength="12" class="num w180" placeholder="' - ' 빼고 입력해주세요.">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -114,9 +215,9 @@
                                 <div class="leave-app-txt">
                                     <p>위와 같이 휴가를 신청 하오니 재가하여 주시기 바랍니다.</p>
                                     <ul>
-                                        <li>년</li>
-                                        <li>월</li>
-                                        <li>일</li>
+                                        <li id="year_txt"></li>
+                                        <li id="month_txt"></li>
+                                        <li id="day_txt"></li>
                                     </ul>
                                 </div>
                             </div>
@@ -147,17 +248,12 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>한서연대리</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>${user_name} ${user_position}</td>
+                                            <td id="reviewer_person"></td>
+                                            <td id="approver_person"></td>
                                         </tr>
                                         <tr>
-                                            <td class="h70"></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2020. 02. 03</td>
+                                            <td id="today_time"></td>
                                             <td></td>
                                             <td></td>
                                         </tr>
@@ -201,142 +297,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-1" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-1">이영우대표</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-2" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-2">김대근 부사장</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-3" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-3">나창연 부사장</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-4" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-4">최대규 전무</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-5" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-5">최상오 전무</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-6" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-6">한동환 전무</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-7" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-7">길용남 상무</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-8" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-8" class="hide">박진환 상무</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-9" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-9" class="hide">손정호 상무</label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-9" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-9"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-9" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-9"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-9" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-9"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-9" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-9"></label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" id="check01-9" name="">
-                                        </td>
-                                        <td>
-                                            <label for="check01-9"></label>
-                                        </td>
-                                    </tr>
+                                	<c:forEach var="getUserListSelect" items="${getUserList}">
+	                                   		<tr>
+		                                        <td>
+		                                            <label for="check02-1" class="hide"></label>
+		                                            <input type="checkbox" name="userChekBox" onclick="NoMultiChk(this)">
+		                                        </td>
+		                                        <td>${getUserListSelect.USER_NM} ${getUserListSelect.USER_POSITION}</td>
+		                                    </tr>
+	                                 </c:forEach>
                                 </tbody>
                             </table>
                         </div>
                         <div class="modal-selectbtn-box">
                             <ul>
-                                <li><a href="#" title="검토자 선택"><img src="img/sub/btn-modal-right.png" alt="검토자 선택"></a></li>
-                                <li><a href="#" title="승인자 선택"><img src="img/sub/btn-modal-right.png" alt="승인자 선택"></a></li>
-                                <li><a href="#" title="참조자 선택"><img src="img/sub/btn-modal-right.png" alt="참조자 선택"></a></li>
+                                <li><a href="javascript:reviewer_sel()" title="검토자 선택"><img src="../../resources/img/sub/btn-modal-right.png" alt="검토자 선택"></a></li>
+                                <li><a href="javascript:approver_sel()" title="승인자 선택"><img src="../../resources/img/sub/btn-modal-right.png" alt="승인자 선택"></a></li>
+                                <!-- <li><a href="javascript:referrer_sel()" title="참조자 선택"><img src="../../resources/img/sub/btn-modal-right.png" alt="참조자 선택"></a></li> -->
                             </ul>
                         </div>
                         <div class="modal-selectname-box">
                             <div class="modal-selectname-reviewer">
                                 <h3>검토자</h3>
-                                <ul>
-                                    <li>권수복 부장<a href="#" title="삭제"><img src="../../resources/img/sub/btn-selectname-delete.png" alt="삭제"></a></li>
-                                </ul>
+                                <ul></ul>
                             </div>
                             <div class="modal-selectname-approver">
                                 <h3>승인자</h3>
-                                <ul>
-                                    <li>김진호 이사<a href="#" title="삭제"><img src="../../resources/img/sub/btn-selectname-delete.png" alt="삭제"></a></li>
-                                </ul>
+                                <ul></ul>
                             </div>
-                            <div class="modal-selectname-referrer">
+                            <!-- <div class="modal-selectname-referrer">
                                 <h3>참조자</h3>
                                 <ul class="scro-y">
                                     <li>이영우 대표<a href="#" title="삭제"><img src="../../resources/img/sub/btn-selectname-delete.png" alt="삭제"></a></li>
@@ -346,13 +335,13 @@
                                     <li>한동환 전무<a href="#" title="삭제"><img src="../../resources/img/sub/btn-selectname-delete.png" alt="삭제"></a></li>
                                     <li>최상오 전무<a href="#" title="삭제"><img src="../../resources/img/sub/btn-selectname-delete.png" alt="삭제"></a></li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="modal-btn-box">
                         <ul>
                             <li>
-                                <a href="#" title="확인" class="btn-enroll">확인</a>
+                                <a href="javascript:selOkSend()" title="확인" class="btn-enroll">확인</a>
                             </li>
                             <li>
                                 <a href="#" title="취소" class="btn-cancel" id="btn-cancel">취소</a>

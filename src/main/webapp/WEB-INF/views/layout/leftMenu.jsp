@@ -1,11 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<style>
+#md_1:checked + label.green,
+#md_2:checked + label.green,
+#md_3:checked + label.green {
+  background: #3b79b6;
+}
+#md_1:checked + label.green:after,
+#md_2:checked + label.green:after,
+#md_3:checked + label.green:after {
+  background: rgb(207,207,207);
+}
+#md_1:checked + label:after,
+#md_2:checked + label:after,
+#md_3:checked + label:after {
+  left: calc(100% - 20px);
+}
+#md_1 + label,
+#md_2 + label,
+#md_3 + label {
+  background: #ddd;
+  border-radius: 20px;
+  height: 10px;
+}
+#md_1 + label:after,
+#md_2 + label:after,
+#md_3 + label:after {
+  background: #464d52;
+  border-radius: 50%;
+  top: -5px;
+  box-shadow: 0px 0px 3px #aaa;
+}
+#md_3{
+  display: none;
+}
+#md_3 + label {
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  position: relative;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  margin: 0px 20px;
+  box-sizing: border-box;
+}
+#md_3 + label:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 20px;
+  height: 20px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+</style>
+<%-- <%@ include file="header.jsp"%> --%>
 <div class="lnb-wrap">
             <div class="lnb-logo">
                 <p>
-                    <a href="/main.do" title="홈 바로가기">
-                        <img src="../../resources/img/common/hcnc-logo2.png" alt="HCNC 로고">
-                    </a>
+                    <h1><a href="/main.do" title="홈 바로가기" style="font-size: 28px">상복텍 결재시스템</a></h1>
+<!--                         <img src="../../resources/img/common/hcnc-logo2.png" alt="HCNC 로고"> -->
+                    
                 </p>
             </div>
             <div class="lnb-top-box">
@@ -41,9 +99,22 @@
                             <li><a href="#" title="코드관리">코드관리</a></li>
                         </ul>
                     </li>
+                    <li style="display:flex; justify-content: space-between; margin-top: 8px;">
+                    	<p style="color: #bdbdbd; font-weight:bold;">다크모드</p>
+                    	<div style="padding-top: 5px;">
+                    		<c:if test="${cookie.mode_dark.value == null}">
+		                		<input type="checkbox" id="md_3" name="webmode">
+	                    		<label for="md_3" class="green"></label>
+		               		</c:if>
+		               		<c:if test="${cookie.mode_dark.value != null}">
+		                		<input type="checkbox" id="md_3" name="webmode" checked="checked">
+	                    		<label for="md_3" class="green"></label>
+		               		</c:if>
+                    	</div>
+                    </li>
                 </ul>
                 <div class="mail-box">
-                    <p>Postmaster@hcnc.co.kr</p>
+                    <p>Postmaster@sbTeck.com</p>
                 </div>
             </div>
         </div>

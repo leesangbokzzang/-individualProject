@@ -10,17 +10,73 @@
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="../resources/css/import.css" />
+	<link rel="stylesheet" type="text/css" href="../resources/css/import.css" id="lightCss"/>
+<!-- 	<link rel="stylesheet" type="text/css" href="../resources/dark/dark.css" id="darkCss"/> -->
     <script src="../resources/js/jquery-1.9.1.js"></script>
     <script src="../resources/js/script.js"></script>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     
     <!-- datepicker 외부링크 -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+<!--      <link rel="stylesheet" href="/resources/demos/style.css"> -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
+    <style>
+    	
+    </style>
+    <script>
+    	//웹모드 체크 보내기
+    	var cnt = 0;
+    	$(function(){
+    		var modeChek = $("#md_3").val();
+        	$("#md_3").on('click', function(){
+        		$.ajax({
+        			url : 'webMode.do',
+        			type : 'POST',
+        			data : {webmode : modeChek},
+        			success : function(){
+        				if($("#md_3").is(":checked")== true){
+        	  				  var ls = document.createElement('link');
+        	  				  ls.rel="stylesheet";
+        	  				  ls.href="../resources/dark/dark.css";
+        	  				  document.getElementsByTagName('head')[0].appendChild(ls);
+        	  				  $("#lightCss").remove();
+          				}else if($("#md_3").is(":checked")== false){
+     	  					var ls = document.createElement('link');
+   	    				    ls.rel="stylesheet";
+   	    				    ls.href="../resources/css/import.css";
+   	    				    document.getElementsByTagName('head')[0].appendChild(ls);
+   	    				    $("#darkCss").remove();
+          				}
+        			},
+        			error : function(xhr){
+        				xhr.status+", "+ xhr.statusText;
+        				alert(modeChek);
+        			}
+        		})
+        	});
+        	
+        	if($("#md_3").is(":checked")== true){
+				if(cnt == 0){
+				  var ls = document.createElement('link');
+				  ls.rel="stylesheet";
+				  ls.href="../resources/dark/dark.css";
+				  document.getElementsByTagName('head')[0].appendChild(ls);
+				  $("#lightCss").remove();
+				  cnt = 1;
+ 			}
+			}else if($("#md_3").is(":checked")== false){
+				if(cnt == 1){	
+  					var ls = document.createElement('link');
+    				  ls.rel="stylesheet";
+    				  ls.href="../resources/css/import.css";
+    				  document.getElementsByTagName('head')[0].appendChild(ls);
+    				  $("#darkCss").remove();
+  					cnt=0;
+  				}
+			}
+    	})
+    </script>
     <script>
     /*json 형식 변환 object*/
     jQuery.fn.serializeObject = function() {
@@ -51,6 +107,7 @@
     	 $( "#regDate1" ).datepicker();
     	 $( "#regDate2" ).datepicker();
     	 
+    	 
      })
      
      $.datepicker.setDefaults({
@@ -66,6 +123,9 @@
             yearSuffix: '년'
 
         });
+     
+     
+     
     </script>
 </head>
 

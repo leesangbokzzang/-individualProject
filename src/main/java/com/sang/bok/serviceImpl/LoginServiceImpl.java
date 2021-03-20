@@ -16,7 +16,6 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public UserVO loginAuth(String user_id) {
 		UserVO vo = loginDAO.loginAuth(user_id);
-		
 		return vo;
 	}
 	

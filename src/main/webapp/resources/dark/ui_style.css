@@ -109,22 +109,22 @@
  th.bg-navy.white {border-right:1px solid #748394;}
  
  /*List style*/
- .table-type01 {width:100%; border-top:2px solid #1fabf2; background-color:#fff;}
+ .table-type01 {width:100%; border-top:2px solid #3b79b6; background-color:#fff;}
  .table-type01 tr {min-height:20px;}
  .table-type01 tr:hover {background-color:#f4f8fb;}
- .table-type01 th {border-bottom:0px; border:1px solid #eaeaea; background-color:#f9f9f9; padding:5px; font-weight:600; height: 35px; color: #333;}
+ .table-type01 th {border-bottom:0px; border:1px solid rgb(207,207,207); background-color:#212533; padding:5px; font-weight:600; height: 35px; color: #bdbdbd;}
  .table-type01 th:first-child {border-left:0;}
  .table-type01 th:last-child {border-right:0;}
- .table-type01 td {border:1px solid #eaeaea; padding:6px 5px; text-align:center; font-size:15px; height: 35px; background: #fff; color: #333;}
+ .table-type01 td {border:1px solid #eaeaea; padding:6px 5px; text-align:center; font-size:15px; height: 35px; background: #272b38; color:#bdbdbd;}
  .table-type01 td:first-child {border-left:0;}
  .table-type01 td:last-child {border-right:0;}
  
  /*Write style*/
- .table-type02 { width:100%; border-top: 2px solid #1fabf2; border-collapse: inherit; }
+ .table-type02 { width:100%; border-top: 2px solid #3b79b6; border-collapse: inherit; }
  .table-type02 tbody th:first-child {border-left:0;}
  .table-type02 tbody td:last-child {border-right:0;}
- .table-type02 tbody th { border-left:1px solid #e8e8e8; border-right:1px solid #e8e8e8; padding:5px 5px; font-weight: 600; background-color: #f7f7f7; border-bottom: 1px solid #e8e8e8; height: 35px;color:#333;}
- .table-type02 tbody td { padding:5px 7px; border-bottom:1px solid #e8e8e8; background-color:#fff; height: 35px; color: #333;}
+ .table-type02 tbody th { border-left:1px solid rgb(207,207,207); border-right:1px solid rgb(207,207,207); padding:5px 5px; font-weight: 600; background-color: #212533; border-bottom: 1px solid #e8e8e8; height: 35px; color: #bdbdbd;}
+ .table-type02 tbody td { padding:5px 7px; border-bottom:1px solid #e8e8e8; background-color:#272b38; height: 35px; color: #bdbdbd;}
  
  /*List Etc style*/
  .table-type03 {width:100%; border-top:2px solid #1fabf2; background-color:#fff;}
@@ -228,7 +228,7 @@ input[type="radio"] + label {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    color: #333333;
+    color: #bdbdbd;
 }
 
 input[type="radio"] + label:before {

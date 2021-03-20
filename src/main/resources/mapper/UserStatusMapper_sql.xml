@@ -26,10 +26,11 @@
 		);
 	</insert>
 	
+	<!-- replace (USER_NM, substr(USER_NM, 2,1), '*' )  이름 중간에는 * 로 표시 -->
 	<select id="getUserListSelect" resultType="map">
 		select 
 			SABUN 
-			,replace (USER_NM, substr(USER_NM, 2,1), '*' ) as USER_NM
+			,USER_NM
 			,cc.DC as USER_POSITION
 			, TEAM_NM 
 			, PHONENUM 

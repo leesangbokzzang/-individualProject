@@ -95,4 +95,6 @@ public class LoginController {
 		mav.setViewName("main/login");
 		return mav;
 	}
+	
+
 }
