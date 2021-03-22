@@ -2,6 +2,8 @@ package com.sang.bok;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sang.bok.security.UserSha256;
 import com.sang.bok.serviceImpl.CommonCodeServiceImpl;
 import com.sang.bok.serviceImpl.UserStatusServiceImpl;
 
@@ -47,6 +50,14 @@ public class UserStatusController {
 		
 		ModelAndView map = new ModelAndView();
 		
+		String getPwd = (String) hashMap.get("password");
+		System.out.println("controller : "+getPwd);
+		
+		String encryPassword = UserSha256.encrypt(getPwd);
+		hashMap.put("password", encryPassword);
+		
+		System.out.println("비번 암호화 : "+ encryPassword);
+		
 		map.addObject("result", UserStatusService.UserInsertFm(hashMap));
 		map.setViewName("jsonView");
 		
@@ -71,6 +82,9 @@ public class UserStatusController {
 	@RequestMapping(value="userUpdatefm.do", method = RequestMethod.POST)
 	public ModelAndView userUpdatefm(@RequestBody HashMap<String, Object> hashMap){
 		ModelAndView map = new ModelAndView();
+		
+		String changePwd = UserSha256.encrypt((String)hashMap.get("password"));
+		hashMap.put("password", changePwd);
 		
 		map.addObject("result", UserStatusService.UserUpdateFm(hashMap));
 		map.setViewName("jsonView");

@@ -14,7 +14,6 @@
 		$("#year_txt").html(year+" 년");
 		$("#month_txt").html(month+" 월");
 		$("#day_txt").html(day+" 일");
-		$("#today_time").html(year + ". " + month + ". " + day);
 		
 	});
 	
@@ -29,14 +28,14 @@
 		});
 		var sel_name = td.eq(1).text();
 		
-		var sessionName = "<c:out value='${user_name} ${user_position}'/>";
-		
-		if(sessionName == sel_name){
-			alert("자신을 선택할 수 없습니다.");
+		var sessionName = "<c:out value='${sabun}'/>";
+		var user_sabun =  td.eq(2).val();
+		if(sessionName == user_sabun){
+			swal("경고!", "자신을 선택할 수 없습니다.", "error");
 			return false;
 		}
 		
-		var name_label = "<li>"+sel_name+" <a href='javascript:label_delete(1)' title='삭제'><img src='../../resources/img/sub/btn-selectname-delete.png' alt='삭제'></a></li>";
+		var name_label = "<li>"+sel_name+" <input type='hidden' value='"+user_sabun+"' class='label-sabun'/><a href='javascript:label_delete(1)' title='삭제'><img src='../../resources/img/sub/btn-selectname-delete.png' alt='삭제'></a></li>";
 		$(".modal-selectname-reviewer > ul").html(name_label);
 	}
 	
@@ -51,14 +50,14 @@
 		});
 		var sel_name = td.eq(1).text();
 		
-		var sessionName = "<c:out value='${user_name} ${user_position}'/>";
-		
-		if(sessionName == sel_name){
-			alert("자신을 선택할 수 없습니다.");
+		var sessionName = "<c:out value='${sabun}'/>";
+		var user_sabun = td.eq(2).val();
+		if(sessionName == user_sabun){
+			swal("경고!", "자신을 선택할 수 없습니다.", "error");
 			return false;
 		}
 		
-		var name_label = "<li>"+sel_name+" <a href='javascript:label_delete(2)' title='삭제'><img src='../../resources/img/sub/btn-selectname-delete.png' alt='삭제'></a></li>";
+		var name_label = "<li>"+sel_name+" <input type='hidden' value='"+user_sabun+"' class='label-sabun'/><a href='javascript:label_delete(2)' title='삭제'><img src='../../resources/img/sub/btn-selectname-delete.png' alt='삭제'></a></li>";
 		$(".modal-selectname-approver > ul").html(name_label);
 	}
 	
@@ -74,18 +73,20 @@
 	// 검토/승인자 선택 모달창에서 확인버튼 스크립트
 	function selOkSend(){
 		if($(".modal-selectname-reviewer > ul").html() == ""){
-			alert("검토자를 선택하십시오.");
+			swal("경고!", "검토자를 선택하십시오", "error");
 			return false;
 		}else if($(".modal-selectname-approver > ul").html() == ""){
-			alert("승인자를 선택하십시오.");
+			swal("경고!", "승인자를 선택하십시오", "error");
 			return false;
 		}
 		
-		var label1 = $(".modal-selectname-reviewer > ul > li").html().substr(0, 7);
-		var label2 = $(".modal-selectname-approver > ul > li").html().substr(0, 7);
+		var label1 = $(".modal-selectname-reviewer > ul > li").text();
+		var label11 = $(".modal-selectname-reviewer > ul > li > .label-sabun").val();
+		var label2 = $(".modal-selectname-approver > ul > li").text();
+		var label22 = $(".modal-selectname-approver > ul > li > .label-sabun").val();
 		
-		$("#reviewer_person").html(label1);
-		$("#approver_person").html(label2);
+		$("#reviewer_person").html(label1+"<input type='hidden' value='"+label11+"' id='reviewer_sabun' name='reviewer'/>");
+		$("#approver_person").html(label2+"<input type='hidden' value='"+label22+"' id='reviewer_sabun' name='approver'/>");
  	    $(".modal-wrap").hide();
  	   	$(".modal-selectname-reviewer > ul").html("");
 		$(".modal-selectname-approver > ul").html("");
@@ -100,6 +101,27 @@
 	            obj[i].checked = false;
 	        }
 	    }
+	}
+	
+	//작성완료 스크립트
+	function vacation_insert(){
+		
+		var formdate =$("form[name=vacationSendFm]").serializeObject();
+		var jsondata = JSON.stringify(formdate);
+		
+		$.ajax({
+			url : 'vacationSendFm.do',
+			type: 'POST',
+			contentType : "application/json;charset=utf-8",
+			dataType : 'json',
+			data : jsondata,
+			success : function(){
+				
+			},
+			error : function(error){
+				alert("ERROR : " + error);
+			}
+		});
 	}
 </script>
     <div class="sub-main-wrap">
@@ -129,6 +151,8 @@
             <!--//main-title-->
             <div class="sub-container">
                 <div class="sub-section-wrap leave-app">
+                <form id="vacationSendFm" name="vacationSendFm" method="POST">
+                	<input type="hidden" name="sabun" value="${sabun}">
                     <div class="col-1">
                         <section>
                             <div class="section-tit">
@@ -156,30 +180,30 @@
                                             <th>담당업무</th>
                                             <td>
                                                 <label for="" class="hide"></label>
-                                                <input type="text">
+                                                <input type="text" name="assigned_tsk" id="assigned_tsk">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>직위</th>
                                             <td>${user_position}</td>
                                             <th>업무인수자</th>
-                                            <td><input type="text"></td>
+                                            <td><input type="text" id="bsns_tkvr" name="bsns_tkvr"></td>
                                         </tr>
                                         <tr>
                                             <th>종류</th>
                                             <td colspan="3">
                                                 <div class="btn-radio">
-                                                    <input type="radio" name="vacationType" id="test01" value="연차" checked="">
+                                                    <input type="radio" name="vacation_type" id="test01" value="연차" checked="checked">
                                                     <label for="test01">연차</label>
-                                                    <input type="radio" name="vacationType" id="test02" value="월차">
+                                                    <input type="radio" name="vacation_type" id="test02" value="월차">
                                                     <label for="test02">월차</label>
-                                                    <input type="radio" name="vacationType" id="test03" value="반차">
+                                                    <input type="radio" name="vacation_type" id="test03" value="반차">
                                                     <label for="test03">반차</label>
-                                                    <input type="radio" name="vacationType" id="test04" value="훈련,교육">
+                                                    <input type="radio" name="vacation_type" id="test04" value="훈련,교육">
                                                     <label for="test04">훈련,교육</label>
-                                                    <input type="radio" name="vacationType" id="test05" value="경조">
+                                                    <input type="radio" name="vacation_type" id="test05" value="경조">
                                                     <label for="test05">경조</label>
-                                                    <input type="radio" name="vacationType" id="test06" value="기타">
+                                                    <input type="radio" name="vacation_type" id="test06" value="기타">
                                                     <label for="test06">기타(생휴)</label>
                                                 </div>
                                             </td>
@@ -188,17 +212,17 @@
                                             <th>사유</th>
                                             <td colspan="3">
                                                 <label for="" class="hide">사유란</label>
-                                                <textarea class="h70"></textarea>
+                                                <textarea class="h70" id="vacation_cont" name="vacation_cont"></textarea>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>기간</th>
                                             <td colspan="3">
                                                 <label for="" class="hide">시작일</label>
-                                                <input type="text" id="regDate1" name="regDate1" onchange="call()" class="w140 datapicker">
+                                                <input type="text" id="regDate1" name="vacation_stt" onchange="call()" class="w140 datapicker">
                                                 <span>~</span>
                                                 <label for="" class="hide">종료일</label>
-                                                <input type="text" id="regDate2" name="regDate2" onchange="call()" class="w140 datapicker">
+                                                <input type="text" id="regDate2" name="vacation_end" onchange="call()" class="w140 datapicker">
                                                 <label for="" class="hide">총 일수</label>
                                                 <input type="text" id="days" name="" class="w46 mg-l10 ta-c readonly" readonly="">
                                             </td>
@@ -207,7 +231,7 @@
                                             <th>비상 연락망</th>
                                             <td colspan="3">
                                             	<label for="" class="hide">비상 연락망</label>
-                                                <input type="text" maxlength="12" class="num w180" placeholder="' - ' 빼고 입력해주세요.">
+                                                <input type="text" id="emrgn_num" name="emrgn_num" maxlength="12" class="num w180" placeholder="' - ' 빼고 입력해주세요.">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -252,21 +276,17 @@
                                             <td id="reviewer_person"></td>
                                             <td id="approver_person"></td>
                                         </tr>
-                                        <tr>
-                                            <td id="today_time"></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </section>
                     </div>
+                    </form>
                 </div>
                 <div class="btn-box">
                     <ul>
                         <li><a href="#" title="취소" class="">취소</a></li>
-                        <li><a href="#" title="작성완료" class="bg-blue">작성완료</a></li>
+                        <li><a href="javascript:vacation_insert()" title="작성완료" class="bg-blue">작성완료</a></li>
                     </ul>
                 </div>
             </div>
@@ -303,7 +323,10 @@
 		                                            <label for="check02-1" class="hide"></label>
 		                                            <input type="checkbox" name="userChekBox" onclick="NoMultiChk(this)">
 		                                        </td>
-		                                        <td>${getUserListSelect.USER_NM} ${getUserListSelect.USER_POSITION}</td>
+		                                        <td>
+		                                        	${getUserListSelect.USER_NM} ${getUserListSelect.USER_POSITION}
+		                                        </td>
+		                                        <input type="hidden" name="user_sabun" value="${getUserListSelect.SABUN}" id="user_sabun">
 		                                    </tr>
 	                                 </c:forEach>
                                 </tbody>

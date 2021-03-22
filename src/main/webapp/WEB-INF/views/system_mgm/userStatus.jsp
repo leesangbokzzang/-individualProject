@@ -6,7 +6,7 @@
 $(document).ready(function(){
 	//로그인한 유저의 권한을 확인 후 관리자가 아니면 이전페이지로  //관리자는 = 1, 일반사용자 = 0 
 	if(${grade} != 0){//임시로 0으로 함
-		alert("현재 페이지에 접근할 수 없습니다.");
+		swal("경고!", "페이지에 권한이 없습니다.", "error");
 		location.href= history.back();
 	}
 });
@@ -47,7 +47,7 @@ function userInsert(){
 	var jsondata = JSON.stringify(formdate);
 	
 	if(sabun == "" || userPosition == "" || teamNm == "" || userNm == ""){
-		alert("필수기입란 입니다.");
+		swal("경고!", "필수 기입란 입니다.", "error");
 		return;
 	}
 	
@@ -58,7 +58,7 @@ function userInsert(){
 		dataType : 'json',
 		data : jsondata,
 		success : function(result){
-			alert("등록을 완료하였습니다.");
+			swal("확인!", "등록 완료 되었습니다.", "success");
 			formReset();
 		},
 		error : function(error){
@@ -78,9 +78,8 @@ function userUpdate(){
 	var email = $("#email").val();
 	var phonenum = $("#phonenum").val();
 	if(sabun == "" || userPosition == "" || teamNm == "" || userNm == "" || email == "" || phonenum == ""){
-		alert("사용자를 선택해주십시오.");
-		//alerts("fa fa-warning", "경고", "사용자를 선택해주십시오.");
-		return;
+		swal("경고!", "사용자를 선택해주십시오.", "error");
+		return false;
 	}
 	
 	var formdate =$("form[name=userInsertFm]").serializeObject();
@@ -97,7 +96,7 @@ function userUpdate(){
 			$("#btnUserInsert").show();
 			$("#password").attr('readonly', true);
 			$("#password").css("background", "#f5f5f5");
-			alert("수정을 하였습니다.");
+			swal("확인!", "수정 하였습니다.", "success");
 			formReset();
 		},
 		error : function(error){
@@ -116,7 +115,7 @@ function userDelete(){
 	var teamNm = $("#team_nm").val();
 	
 	if(sabun == "" || userPosition == "" || teamNm == "" || userNm == ""){
-		alert("사용자를 선택해주십시오.");
+		swal("경고!", "사용자를 선택해주십시오.", "error");
 		return false;
 	}
 	
@@ -130,7 +129,7 @@ function userDelete(){
 		dataType : 'json',
 		data : jsondata,
 		success : function(result){
-			alert("삭제 하였습니다.");
+			swal("확인!", "삭제 하였습니다.", "success");
 			$("#btnUserInsert").show();
 			$("#password").attr('readonly', true);
 			$("#password").css("background", "#f5f5f5");
@@ -151,6 +150,11 @@ function pwdReset(){
 	formdate.password = sabun + "1" + "!";
 	var jsondata = JSON.stringify(formdate);
 	
+	if(sabun == ""){
+		swal("경고!", "사용자를 선택해주십시오.", "error");
+		return false;
+	}
+	
 	$.ajax({
 		url : 'userPwdResetfm.do',
 		type : 'POST',
@@ -158,7 +162,7 @@ function pwdReset(){
 		dataType : 'json',
 		data : jsondata,
 		success : function(result){
-			alert("패스워드를 초기화 하였습니다.");
+			swal("확인!", "패스워드를 초기화 하였습니다.", "success");
 			$("#btnUserInsert").show();
 			$("#password").attr('readonly', true);
 			$("#password").css("background", "#f5f5f5");

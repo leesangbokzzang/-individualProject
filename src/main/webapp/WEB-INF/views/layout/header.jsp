@@ -14,7 +14,9 @@
 <!-- 	<link rel="stylesheet" type="text/css" href="../resources/dark/dark.css" id="darkCss"/> -->
     <script src="../resources/js/jquery-1.9.1.js"></script>
     <script src="../resources/js/script.js"></script>
+    <script src="../resources/js/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
+    
     
     <!-- datepicker 외부링크 -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

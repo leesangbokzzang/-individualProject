@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sang.bok.security.UserSha256;
 import com.sang.bok.service.LoginService;
 import com.sang.bok.vo.UserVO;
 
@@ -45,12 +46,16 @@ public class LoginController {
 		String pwd = request.getParameter("password");
 		String idsave = request.getParameter("idsave");
 		
+		String user_pw = UserSha256.encrypt(pwd);
+		
+		System.out.println("LOGIN : " + user_pw);
+		
 		UserVO userVo = LogoinService.loginAuth(user_id);
 		
 		System.out.println(idsave);
 		
 		if(userVo != null){
-			if(userVo.getPassword().equals(pwd)){
+			if(userVo.getPassword().equals(user_pw)){
 				if(idsave != null){
 					Cookie cookie = new Cookie("user_id", java.net.URLEncoder.encode(userVo.getSabun()));
 					cookie.setMaxAge(60*60*24*7);
