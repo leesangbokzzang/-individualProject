@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="leaveVacation">
+	<insert id="vacationInsert" parameterType="hashmap">
+		INSERT INTO vacation_tbl
+		(
+			  sabun
+			, assigned_tsk
+			, bsns_tkvr
+			, vacation_type
+			, vacation_cont
+			, vacation_stt
+			, vacation_end
+			, emrgn_num
+			, reviewers
+			, approver
+			, regdate
+		) 
+		VALUES(
+			#{sabun}
+			,#{assigned_tsk}
+			,#{bsns_tkvr}
+			,#{vacation_type}
+			,#{vacation_cont}
+			,#{vacation_stt}
+			,#{vacation_end}
+			,#{emrgn_num}
+			,#{reviewers}
+			,#{approver}
+			,now()
+		)
+	</insert>
+	
+	
+</mapper>

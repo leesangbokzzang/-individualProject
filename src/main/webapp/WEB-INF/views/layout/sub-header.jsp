@@ -10,6 +10,6 @@
             <p>${team_nm}</p>
             <p>${user_name}</p>
         </li>
-        <li><a href="/logout.do" title="로그아웃"><img src="../../resources/img/common/ico-logout.png" alt="로그아웃"></a></li>
+        <li><a href="javascript:logoutFm()" title="로그아웃"><img src="../../resources/img/common/ico-logout.png" alt="로그아웃"></a></li>
     </ul>
 </div>

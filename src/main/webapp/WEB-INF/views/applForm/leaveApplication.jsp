@@ -85,7 +85,7 @@
 		var label2 = $(".modal-selectname-approver > ul > li").text();
 		var label22 = $(".modal-selectname-approver > ul > li > .label-sabun").val();
 		
-		$("#reviewer_person").html(label1+"<input type='hidden' value='"+label11+"' id='reviewer_sabun' name='reviewer'/>");
+		$("#reviewer_person").html(label1+"<input type='hidden' value='"+label11+"' id='reviewer_sabun' name='reviewers'/>");
 		$("#approver_person").html(label2+"<input type='hidden' value='"+label22+"' id='reviewer_sabun' name='approver'/>");
  	    $(".modal-wrap").hide();
  	   	$(".modal-selectname-reviewer > ul").html("");
@@ -106,6 +106,11 @@
 	//작성완료 스크립트
 	function vacation_insert(){
 		
+		var assigned_tsk =  $("#assigned_tsk").val();
+		var bsns_tkvr    =  $("#bsns_tkvr").val();
+		
+		
+		
 		var formdate =$("form[name=vacationSendFm]").serializeObject();
 		var jsondata = JSON.stringify(formdate);
 		
@@ -116,10 +121,11 @@
 			dataType : 'json',
 			data : jsondata,
 			success : function(){
-				
+				$("#assigned_tsk").val("");
+				swal("확인!", "휴가신청서 작성 완료하였습니다.", "success");
 			},
-			error : function(error){
-				alert("ERROR : " + error);
+			error : function(xhr){
+				alert("ERROR : " +xhr.status+","+ xhr.statusText);
 			}
 		});
 	}
@@ -193,17 +199,17 @@
                                             <th>종류</th>
                                             <td colspan="3">
                                                 <div class="btn-radio">
-                                                    <input type="radio" name="vacation_type" id="test01" value="연차" checked="checked">
+                                                    <input type="radio" name="vacation_type" id="test01" value="연차"/>
                                                     <label for="test01">연차</label>
-                                                    <input type="radio" name="vacation_type" id="test02" value="월차">
+                                                    <input type="radio" name="vacation_type" id="test02" value="월차"/>
                                                     <label for="test02">월차</label>
-                                                    <input type="radio" name="vacation_type" id="test03" value="반차">
+                                                    <input type="radio" name="vacation_type" id="test03" value="반차"/>
                                                     <label for="test03">반차</label>
-                                                    <input type="radio" name="vacation_type" id="test04" value="훈련,교육">
+                                                    <input type="radio" name="vacation_type" id="test04" value="훈련,교육"/>
                                                     <label for="test04">훈련,교육</label>
-                                                    <input type="radio" name="vacation_type" id="test05" value="경조">
+                                                    <input type="radio" name="vacation_type" id="test05" value="경조"/>
                                                     <label for="test05">경조</label>
-                                                    <input type="radio" name="vacation_type" id="test06" value="기타">
+                                                    <input type="radio" name="vacation_type" id="test06" value="기타"/>
                                                     <label for="test06">기타(생휴)</label>
                                                 </div>
                                             </td>

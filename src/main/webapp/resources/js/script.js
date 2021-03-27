@@ -425,32 +425,4 @@
         }); */
 
 
-/*        $(document).ready(function () {
-
-                        
-         
-            // LNB 아코디언 메뉴 스크립트
-            //$(".sub-accordion-menu").hide();
-            $(".sub-accordion-menu").next().show();
-            $(".accordion-menu-tit").click(function () {
-                $(this).next().slideToggle(300);
-                //$(this).next().slideDown(300);
-                $(".accordion-menu-tit").not(this).next().slideUp(300);
-                return false;
-            });
-            $(".accordion-menu-tit").eq(0).trigger("click");
-
-            //LNB 메뉴 title 클릭시 아이콘이미지 변경 스크립트
-            $(".accordion-menu-tit").click(function () {
-                if ($(this).hasClass("open") == true) {
-                    $(this).removeClass("open");
-                } else {
-                    $(this).addClass("open");
-                }
-                $(this).parent().siblings().children().removeClass("open");
-            });
-
-            //LNB 해당 메뉴 열림
-            $(".dep1 > li > a.on").parents(".lnb-accordion-menu").find(".dep1").show(); 
-        });
-*/
+        

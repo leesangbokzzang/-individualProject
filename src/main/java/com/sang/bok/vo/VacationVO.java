@@ -12,13 +12,16 @@ public class VacationVO {
 	private String emrgn_num;
 	private String reviewers;
 	private String approver;
+	private String reviewaiting;
+	private String approverwaiting;
 	private String regdate;
 	
 	public VacationVO(){}
-	
+
 	public VacationVO(int idx, String sabun, String assigned_tsk, String bsns_tkvr, String vacation_type,
 			String vacation_cont, String vacation_stt, String vacation_end, String emrgn_num, String reviewers,
-			String approver, String regdate) {
+			String approver, String reviewaiting, String approverwaiting, String regdate) {
+		super();
 		this.idx = idx;
 		this.sabun = sabun;
 		this.assigned_tsk = assigned_tsk;
@@ -30,6 +33,8 @@ public class VacationVO {
 		this.emrgn_num = emrgn_num;
 		this.reviewers = reviewers;
 		this.approver = approver;
+		this.reviewaiting = reviewaiting;
+		this.approverwaiting = approverwaiting;
 		this.regdate = regdate;
 	}
 
@@ -121,6 +126,22 @@ public class VacationVO {
 		this.approver = approver;
 	}
 
+	public String getReviewaiting() {
+		return reviewaiting;
+	}
+
+	public void setReviewaiting(String reviewaiting) {
+		this.reviewaiting = reviewaiting;
+	}
+
+	public String getApproverwaiting() {
+		return approverwaiting;
+	}
+
+	public void setApproverwaiting(String approverwaiting) {
+		this.approverwaiting = approverwaiting;
+	}
+
 	public String getRegdate() {
 		return regdate;
 	}
@@ -134,7 +155,7 @@ public class VacationVO {
 		return "VacationVO [idx=" + idx + ", sabun=" + sabun + ", assigned_tsk=" + assigned_tsk + ", bsns_tkvr="
 				+ bsns_tkvr + ", vacation_type=" + vacation_type + ", vacation_cont=" + vacation_cont
 				+ ", vacation_stt=" + vacation_stt + ", vacation_end=" + vacation_end + ", emrgn_num=" + emrgn_num
-				+ ", reviewers=" + reviewers + ", approver=" + approver + ", regdate=" + regdate + "]";
+				+ ", reviewers=" + reviewers + ", approver=" + approver + ", reviewaiting=" + reviewaiting
+				+ ", approverwaiting=" + approverwaiting + ", regdate=" + regdate + "]";
 	}
-	
 }

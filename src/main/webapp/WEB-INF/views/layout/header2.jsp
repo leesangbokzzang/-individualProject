@@ -41,7 +41,6 @@
     	//웹모드 체크 보내기
     	var cnt = 0;
     	$(function(){
-    		
     		var modeChek = $("#md_3").val();
         	$("#md_3").on('click', function(){
         		$.ajax({
@@ -138,13 +137,11 @@
 
         });
      
-     function logoutFm(){
-     	location.href="/logout.do";
-     	alert("로그아웃 하셨습니다.");
-     }
+     
      
     </script>
 </head>
 
 <body>
+
 	

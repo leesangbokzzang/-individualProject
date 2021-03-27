@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sang.bok.service.VacationService;
 import com.sang.bok.serviceImpl.UserStatusServiceImpl;
 
 @Controller
@@ -18,8 +19,8 @@ public class LeaveApplicationController {
 	@Autowired
 	private UserStatusServiceImpl UserStatusService;
 	
-//	@Autowired
-//	private VacationService vacationService;
+	@Autowired
+	private VacationService vacationService;
 	
 	@RequestMapping(value="/leaveApplication.do", method=RequestMethod.GET)
 	public ModelAndView leaveApplication(){
@@ -42,7 +43,7 @@ public class LeaveApplicationController {
 		System.out.println("컨트롤러 도착");
 		System.out.println("Controller : " + hashMap);
 		
-		//mav.addObject("vacationInsert", vacationService.vacationInsert(vo));
+		vacationService.vacationInsert(hashMap);
 		
 		mav.setViewName("jsonView");
 		

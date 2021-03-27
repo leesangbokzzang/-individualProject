@@ -12,6 +12,13 @@
            <mapping path="/**"/>
            <beans:bean id="commonInterceptor" class="com.sang.bok.interceptor.CommonInterceptor"/>
        </interceptor>
+       
+       <interceptor>
+			<mapping path="/leaveApplication.do"/> 
+       		<mapping path="/userStatus.do"/>
+       		<mapping path="/main.do"/>
+       		<beans:bean id="loginCheckInterceptor" class="com.sang.bok.interceptor.LoginCheckInterceptor"/>
+       </interceptor>
     </interceptors>
      
     <beans:bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
@@ -20,6 +27,6 @@
       <beans:property name="order" value="0"/>
     </beans:bean>
      
-    <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+    <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
        
  </beans:beans>

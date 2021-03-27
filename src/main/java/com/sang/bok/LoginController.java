@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,8 +49,6 @@ public class LoginController {
 		
 		String user_pw = UserSha256.encrypt(pwd);
 		
-		System.out.println("LOGIN : " + user_pw);
-		
 		UserVO userVo = LogoinService.loginAuth(user_id);
 		
 		System.out.println(idsave);
@@ -75,7 +74,7 @@ public class LoginController {
 				session.setAttribute("team_nm", userVo.getTeam_nm());
 				session.setAttribute("grade", userVo.getGrade());
 				
-				mav.setViewName("main/main");
+				mav.setViewName("redirect:/main.do");
 				
 			}else{
 				System.out.println("비번 틀림");
@@ -91,13 +90,12 @@ public class LoginController {
 	
 	//로그아웃
 	@RequestMapping(value="/logout.do", method = RequestMethod.GET)
-	public ModelAndView logout(HttpSession session) throws Exception {
+	public ModelAndView logout(HttpSession session, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
 		
 		//세션 끊기
 		session.invalidate();
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("main/login");
+		mav.setViewName("redirect:/logincheck.do");
 		return mav;
 	}
 	

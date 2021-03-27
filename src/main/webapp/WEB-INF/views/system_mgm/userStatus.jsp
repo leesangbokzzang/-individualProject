@@ -6,7 +6,8 @@
 $(document).ready(function(){
 	//로그인한 유저의 권한을 확인 후 관리자가 아니면 이전페이지로  //관리자는 = 1, 일반사용자 = 0 
 	if(${grade} != 0){//임시로 0으로 함
-		swal("경고!", "페이지에 권한이 없습니다.", "error");
+		alert("페이지에 권한이 없습니다.");
+		//swal("경고!", "페이지에 권한이 없습니다.", "error");
 		location.href= history.back();
 	}
 });
