@@ -17,6 +17,7 @@
 			<mapping path="/leaveApplication.do"/> 
        		<mapping path="/userStatus.do"/>
        		<mapping path="/main.do"/>
+       		<mapping path="/waitingReview.do"/>
        		<beans:bean id="loginCheckInterceptor" class="com.sang.bok.interceptor.LoginCheckInterceptor"/>
        </interceptor>
     </interceptors>

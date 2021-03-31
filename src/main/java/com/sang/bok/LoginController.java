@@ -1,5 +1,7 @@
 package com.sang.bok;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,16 +16,35 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sang.bok.security.UserSha256;
 import com.sang.bok.service.LoginService;
 import com.sang.bok.vo.UserVO;
+import com.sang.bok.vo.VacationVO;
 
 @Controller
 public class LoginController {
 	@Autowired
-	private LoginService LogoinService;
+	private LoginService logoinService;
 	
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
-	public ModelAndView mainMove(){
+	public ModelAndView mainMove(HttpSession session){
 		ModelAndView mav = new ModelAndView();
 		
+		String sabun = (String) session.getAttribute("sabun");
+		
+		//검토대기 조회
+		int reviewNum = logoinService.getReviewCount(sabun);
+		mav.addObject("reviewNum", reviewNum);
+		
+		//검토대기 현황 리스트
+		List<VacationVO> reviewList = logoinService.getReviewList(sabun);
+		mav.addObject("reviewList", reviewList);
+		
+		//승인대기 조회
+		int approverNum = logoinService.getApproverCount(sabun);
+		mav.addObject("approverNum", approverNum);
+		
+		//승인대기 현황 리스트
+		List<VacationVO> approverList = logoinService.getApproverList(sabun);
+		
+		mav.addObject("approverList", approverList);
 		mav.setViewName("main/main");
 		return mav;
 		
@@ -49,7 +69,7 @@ public class LoginController {
 		
 		String user_pw = UserSha256.encrypt(pwd);
 		
-		UserVO userVo = LogoinService.loginAuth(user_id);
+		UserVO userVo = logoinService.loginAuth(user_id);
 		
 		System.out.println(idsave);
 		
@@ -90,7 +110,7 @@ public class LoginController {
 	
 	//로그아웃
 	@RequestMapping(value="/logout.do", method = RequestMethod.GET)
-	public ModelAndView logout(HttpSession session, HttpServletRequest request) throws Exception {
+	public ModelAndView logout(HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
 		//세션 끊기

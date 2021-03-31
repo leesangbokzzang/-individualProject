@@ -22,4 +22,76 @@
 		]]>
 	</select>
 	
+	<select id="getReviewCount" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(IDX)
+		FROM vacation_tbl
+		WHERE reviewers = #{sabnu}
+		AND reviewaiting = 'N'
+	</select>
+	
+	<select id="getApproverCount" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(IDX)
+		FROM vacation_tbl
+		WHERE approver = #{sabnu}
+		AND reviewaiting = 'Y'
+		AND approverwaiting = 'N'
+	</select>
+	
+	<select id="getReviewList" parameterType="String" resultType="com.sang.bok.vo.VacationVO">
+		select 
+			 vt.idx
+			,pi.USER_NM as sabun
+			,vt.user_position as position
+			,vt.assigned_tsk
+			,vt.bsns_tkvr
+			,vt.vacation_type
+			,vt.vacation_cont
+			,vt.vacation_stt
+			,vt.vacation_end
+			,vt.emrgn_num
+			,pi2.USER_NM 
+			,pi3.USER_NM 
+			,DATE_FORMAT(regdate, '%Y-%m-%d') as regdate
+		FROM vacation_tbl vt
+		LEFT OUTER JOIN person_info pi
+		ON vt.sabun = pi.sabun
+		LEFT OUTER JOIN person_info pi2
+		ON vt.reviewers  = pi2.sabun
+		LEFT OUTER JOIN person_info pi3
+		ON vt.approver  = pi3.sabun
+		WHERE reviewers = #{sabun}
+		AND reviewaiting = 'N'
+		ORDER BY vt.idx ASC
+	</select>
+	
+	<select id="getApproverList" parameterType="String" resultType="com.sang.bok.vo.VacationVO">
+		select 
+			 vt.idx
+			,pi.USER_NM as sabun
+			,vt.user_position as position
+			,vt.assigned_tsk
+			,vt.bsns_tkvr
+			,vt.vacation_type
+			,vt.vacation_cont
+			,vt.vacation_stt
+			,vt.vacation_end
+			,vt.emrgn_num
+			,pi2.USER_NM 
+			,pi3.USER_NM 
+			,DATE_FORMAT(regdate, '%Y-%m-%d') as regdate
+		FROM vacation_tbl vt
+		LEFT OUTER JOIN person_info pi
+		ON vt.sabun = pi.sabun
+		LEFT OUTER JOIN person_info pi2
+		ON vt.reviewers  = pi2.sabun
+		LEFT OUTER JOIN person_info pi3
+		ON vt.approver  = pi3.sabun
+		WHERE approver = #{sabun}
+		AND reviewaiting = 'Y'
+		AND approverwaiting = 'N'
+		ORDER BY vt.idx ASC
+	</select>
+	
 </mapper>

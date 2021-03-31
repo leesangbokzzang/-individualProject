@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp"%>
+<script>
+	function getReviewOne(listNum){
+		location.href="/waitingReview.do?idx="+listNum;
+	}
+</script>
     <div class="sub-main-wrap">
         <%@ include file="../layout/leftMenu.jsp"%>
         <div class="sub-container-wrap">
@@ -24,14 +29,14 @@
                         <dl>
                             <dt>검토 대기 중</dt>
                             <dd>현재 검토 대기 중인 항목의 수 입니다.</dd>
-                            <dd>20<span>건</span></dd>
+                            <dd>${reviewNum}<span>건</span></dd>
                         </dl>
                     </div>
                     <div class="waitaprvl-box boxsize">
                         <dl>
                             <dt>승인 대기 중</dt>
                             <dd>현재 승인 대기 중인 항목의 수 입니다.</dd>
-                            <dd>10<span>건</span></dd>
+                            <dd>${approverNum}<span>건</span></dd>
                         </dl>
                     </div>
                     <div class="aplctform-box">
@@ -75,41 +80,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>2020-02-12</td>
-                                            <td>이상복</td>
-                                            <td>휴가신청서</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+                                    	<c:choose>
+                                    		<c:when test="${empty reviewList}">
+                                    			<tr>
+                                    				<td colspan="3">검토대기중인 목록이 없습니다.</td>
+                                    			</tr>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<c:forEach var="reviewList" items="${reviewList}">
+                                        	<tr>
+                                        		<td>${reviewList.regdate}</td>
+                                        		<td>${reviewList.sabun} ${reviewList.position}</td>
+                                        		<td><a href="javascript:getReviewOne(${reviewList.idx})">휴가신청서</a></td>
+                                        	</tr>
+                                        </c:forEach>
+                                    		</c:otherwise>
+                                    	</c:choose>
                                     </tbody>
                                 </table>
                             </div>
@@ -141,41 +127,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>2020-02-12</td>
-                                            <td>이상복</td>
-                                            <td>휴가신청서</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+                                    	<c:choose>
+                                    		<c:when test="${empty approverList}">
+                                    			<tr>
+                                    				<td colspan="3">승인대기중인 목록이 없습니다.</td>
+                                    			</tr>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<c:forEach var="approverList" items="${approverList}">
+		                                        	<tr>
+		                                        		<td>${approverList.regdate}</td>
+		                                        		<td>${approverList.sabun} ${approverList.position}</td>
+		                                        		<td><a href="javascript:getReviewOne(${approverList.idx})">휴가신청서</a></td>
+		                                        	</tr>
+                                        		</c:forEach>
+                                    		</c:otherwise>
+                                    	</c:choose>
+                                        
                                     </tbody>
                                 </table>
                             </div>

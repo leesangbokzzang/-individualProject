@@ -86,7 +86,7 @@
 		var label22 = $(".modal-selectname-approver > ul > li > .label-sabun").val();
 		
 		$("#reviewer_person").html(label1+"<input type='hidden' value='"+label11+"' id='reviewer_sabun' name='reviewers'/>");
-		$("#approver_person").html(label2+"<input type='hidden' value='"+label22+"' id='reviewer_sabun' name='approver'/>");
+		$("#approver_person").html(label2+"<input type='hidden' value='"+label22+"' id='approver_sabun' name='approver'/>");
  	    $(".modal-wrap").hide();
  	   	$(".modal-selectname-reviewer > ul").html("");
 		$(".modal-selectname-approver > ul").html("");
@@ -108,8 +108,17 @@
 		
 		var assigned_tsk =  $("#assigned_tsk").val();
 		var bsns_tkvr    =  $("#bsns_tkvr").val();
+		var vacation_cont = $("#vacation_cont").val();
+		var regDate1 = $("#regDate1").val();
+		var regDate2 = $("#regDate2").val();
+		var emrgn_num = $("#emrgn_num").val();
+		var reviewer_sabun = $("#reviewer_sabun").val();
+		var approver_sabun = $("#approver_sabun").val();
 		
-		
+		if(assigned_tsk == "" || bsns_tkvr == "" ||vacation_cont == "" ||regDate1 == "" ||regDate2 == "" ||emrgn_num == "" ||reviewer_sabun == "" ||approver_sabun == "" ){
+			swal("경고!", "필수 기입란 입니다.", "error");
+			return false;
+		}
 		
 		var formdate =$("form[name=vacationSendFm]").serializeObject();
 		var jsondata = JSON.stringify(formdate);
@@ -122,6 +131,17 @@
 			data : jsondata,
 			success : function(){
 				$("#assigned_tsk").val("");
+				$("#bsns_tkvr").val("");
+				$("[name=vacation_type]").removeAttr("checked");
+				$("#vacation_cont").val("");
+				$("#regDate1").val("");
+				$("#regDate2").val("");
+				$("#emrgn_num").val("");
+				$("#reviewer_sabun").val("");
+				$("#approver_sabun").val("");
+				$("#days").val("");
+				$("#reviewer_person").html("");
+				$("#approver_person").html("");
 				swal("확인!", "휴가신청서 작성 완료하였습니다.", "success");
 			},
 			error : function(xhr){
@@ -130,7 +150,7 @@
 		});
 	}
 </script>
-    <div class="sub-main-wrap">
+  <div class="sub-main-wrap">
     <%@ include file="../layout/leftMenu.jsp"%>
         <div class="sub-container-wrap">
             <div class="main-title">
@@ -159,6 +179,7 @@
                 <div class="sub-section-wrap leave-app">
                 <form id="vacationSendFm" name="vacationSendFm" method="POST">
                 	<input type="hidden" name="sabun" value="${sabun}">
+                	<input type="hidden" name="position" value="${user_position}">
                     <div class="col-1">
                         <section>
                             <div class="section-tit">

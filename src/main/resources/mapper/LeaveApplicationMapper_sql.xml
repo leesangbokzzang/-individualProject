@@ -6,6 +6,7 @@
 		INSERT INTO vacation_tbl
 		(
 			  sabun
+			, user_position
 			, assigned_tsk
 			, bsns_tkvr
 			, vacation_type
@@ -19,6 +20,7 @@
 		) 
 		VALUES(
 			#{sabun}
+			,#{position}
 			,#{assigned_tsk}
 			,#{bsns_tkvr}
 			,#{vacation_type}

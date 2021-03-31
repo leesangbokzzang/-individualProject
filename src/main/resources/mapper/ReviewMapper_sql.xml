@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review">
+	<select id="getReviewOne" parameterType="int" resultType="map">
+		select 
+			 vt.idx
+			,vt.sabun
+			,pi.USER_NM 
+			,pi.TEAM_NM
+			,vt.user_position
+			,vt.assigned_tsk
+			,vt.bsns_tkvr
+			,vt.vacation_type
+			,vt.vacation_cont
+			,vt.vacation_stt
+			,vt.vacation_end
+			,vt.emrgn_num
+			,pi2.USER_NM 
+			,DATE_FORMAT(vt.regdate, '%Y.%m.%d') as regdate
+		FROM vacation_tbl vt
+		LEFT OUTER JOIN person_info pi
+		ON vt.sabun = pi.sabun
+		LEFT OUTER JOIN person_info pi2
+		ON vt.reviewers  = pi2.sabun
+		WHERE idx = #{idx}
+	</select>
+	
+	
+	<update id="reviewaitingUpdate" parameterType="String">
+		update vacation_tbl set
+		reviewaiting = 'Y'
+		where idx = #{idx}
+	</update>
+	
+	<insert id="reviewOkInsert" parameterType="map">
+		insert into vctpayment_tbl(
+			idx
+			,reviewers
+			,revappro
+			,reviewaiting
+			,review_cont
+		)
+		values(
+			#{idx}
+			,#{user_name}
+			,#{revappro}
+			,#{reviewaiting}
+			,#{review_cont}
+		)
+	</insert>
+	
+</mapper>

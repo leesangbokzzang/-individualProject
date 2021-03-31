@@ -3,6 +3,7 @@ package com.sang.bok.vo;
 public class VacationVO {
 	private int idx;
 	private String sabun;
+	private String position;
 	private String assigned_tsk;
 	private String bsns_tkvr;
 	private String vacation_type;
@@ -18,12 +19,13 @@ public class VacationVO {
 	
 	public VacationVO(){}
 
-	public VacationVO(int idx, String sabun, String assigned_tsk, String bsns_tkvr, String vacation_type,
+	public VacationVO(int idx, String sabun, String position, String assigned_tsk, String bsns_tkvr, String vacation_type,
 			String vacation_cont, String vacation_stt, String vacation_end, String emrgn_num, String reviewers,
 			String approver, String reviewaiting, String approverwaiting, String regdate) {
 		super();
 		this.idx = idx;
 		this.sabun = sabun;
+		this.position = position;
 		this.assigned_tsk = assigned_tsk;
 		this.bsns_tkvr = bsns_tkvr;
 		this.vacation_type = vacation_type;
@@ -52,6 +54,14 @@ public class VacationVO {
 
 	public void setSabun(String sabun) {
 		this.sabun = sabun;
+	}
+	
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 	public String getAssigned_tsk() {
@@ -152,7 +162,7 @@ public class VacationVO {
 
 	@Override
 	public String toString() {
-		return "VacationVO [idx=" + idx + ", sabun=" + sabun + ", assigned_tsk=" + assigned_tsk + ", bsns_tkvr="
+		return "VacationVO [idx=" + idx + ", sabun=" + sabun + ", position=" + position + ", assigned_tsk=" + assigned_tsk + ", bsns_tkvr="
 				+ bsns_tkvr + ", vacation_type=" + vacation_type + ", vacation_cont=" + vacation_cont
 				+ ", vacation_stt=" + vacation_stt + ", vacation_end=" + vacation_end + ", emrgn_num=" + emrgn_num
 				+ ", reviewers=" + reviewers + ", approver=" + approver + ", reviewaiting=" + reviewaiting
