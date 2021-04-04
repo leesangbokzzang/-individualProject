@@ -17,7 +17,13 @@
 	//::검토결재 버튼 스크립트
 	function reviewOK(){
 		
-		alert("전송");
+		var review_cont = $("#review_cont").val();
+		
+		if(review_cont == ""){
+			swal("경고","검토의견을 작성해주십시오.", "error");
+			return false;
+		}
+		
 		var user_name = $("#user_name").val();
 		var user_position = $("#user_position").val();
 		var review_cont = $("#review_cont").val();
@@ -33,11 +39,40 @@
 			data : jsondata,
 			success : function(result){
 				swal("확인!", "검토결재 완료하였습니다.", "success");
+				$("#review_cont").val("");
 			},
 			error : function(error){
 				alert("ERROR :: " + error);
 			}
 		});
+	}
+	
+	function revReturn(){
+		var review_cont = $("#review_cont").val();
+		
+		if(review_cont == ""){
+			swal("경고","검토의견을 작성해주십시오.", "error");
+			return false;
+		}	
+		
+		var formdate =$("form[name=reviewOkFm]").serializeObject();
+		var jsondata = JSON.stringify(formdate);
+		
+		$.ajax({
+			url : '/reviewNoFm.do',
+			type : 'POST',
+			contentType : "application/json;charset=utf-8",
+			dataType : 'json',
+			data : jsondata,
+			success : function(result){
+				swal("확인!", "검토반려 하였습니다", "success");
+				$("#review_cont").val("");
+			},
+			error : function(error){
+				alert("ERROR :: " + error);
+			}
+		});
+		
 	}
 </script>
   <div class="sub-main-wrap">
@@ -72,11 +107,11 @@
                     <div class="col-1">
                         <section>
                             <div class="section-tit">
-                                <h3>휴가신청서</h3>
+                                <h3>검토대기(상세)</h3>
                             </div>
                             <div class="table-wrap">
                                 <table class="table-type02">
-                                    <caption>휴가신청서 테이블</caption>
+                                    <caption>검토대기(상세) 테이블</caption>
                                     <colgroup>
                                         <col class="wp15">
                                         <col class="wp30">
@@ -151,9 +186,7 @@
                                             <td id="reviewer_person">
                                             	${user_name} ${user_position}
                                             	<input type="hidden" id="user_name" name="user_name" value="${user_name} ${user_position}" /> 
-<%--                                             	<input type="hidden" id="user_position" name="user_position" value="${user_position}" />  --%>
 													<input type="hidden" id="revappro" name="revappro"/>
-                                            	<input type="hidden" name="reviewaiting" value="Y"/>
                                             </td>
                                             <td id="approver_person"></td>
                                         </tr>

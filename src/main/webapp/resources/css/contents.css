@@ -179,7 +179,7 @@ input[type=number]::-webkit-inner-spin-button{background: url(../img/sub/btn-num
 
 /* 검토 > 검토대기 */
 .review-wait .table-wrap{overflow-y: auto; height: calc(100% - 100px);}
-.review-wait .section-tit dl dt::before{content: ""; background: url(../img/common/lnb-ico-review.png)no-repeat; width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 6px;}
+.review-wait .section-tit dl dt::before{content: " "; background: url(../img/common/lnb-ico-review.png)no-repeat; width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 6px;}
 .review-wait section .section-tit h3{padding-top: 21px;}
 .review-wait .btn-paging ul{padding: 22px 0;}
 

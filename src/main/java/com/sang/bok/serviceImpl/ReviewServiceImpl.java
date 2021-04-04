@@ -1,13 +1,16 @@
 package com.sang.bok.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sang.bok.dao.ReviewDAO;
 import com.sang.bok.service.ReviewService;
-import com.sang.bok.vo.VacationVO;
+import com.sang.bok.vo.Criteria;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -32,6 +35,40 @@ public class ReviewServiceImpl implements ReviewService {
 		reviewDAO.reviewaitingUpdate(idx);
 		
 	}
+
+	@Override
+	public void reviewaitingNo(String idx) {
+		reviewDAO.reviewaitingNo(idx);
+	}
+
+	@Override
+	public void reviewNoInsert(HashMap<String, Object> map) {
+		reviewDAO.reviewNoInsert(map);
+		
+	}
+
+	@Override
+	public Object getReviewList() {
+		Object vo = reviewDAO.getReviewList();
+		return vo;
+	}
+
+	@Override
+	public List<Map<String, Object>> getBoardPaging(Criteria cri) {
+		List<Map<String, Object>> list = reviewDAO.getBoardPaging(cri);
+		return list;
+	}
+
+	@Override
+	public int countboardListTotal() {
+		int result = reviewDAO.countboardListTotal();
+		return result;
+	}
+
+	
+
+
+
 
 	
 

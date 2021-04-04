@@ -1,6 +1,8 @@
 package com.sang.bok;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,11 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sang.bok.service.ReviewService;
+import com.sang.bok.util.PageMaker;
+import com.sang.bok.vo.Criteria;
 
 @Controller
 public class ReviewController {
@@ -21,6 +24,7 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
+	//검토대기(상세)페이지 이동
 	@RequestMapping(value = "/waitingReview.do", method = RequestMethod.GET)
 	public ModelAndView waitingReview(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
@@ -54,4 +58,35 @@ public class ReviewController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/reviewNoFm.do", method=RequestMethod.POST)
+	public ModelAndView reviewNoFm(@RequestBody HashMap<String, Object> map){
+		ModelAndView mav = new ModelAndView();
+		
+		//휴가테이블에 먼저 검토승인결재여부의 컬럼값을 'D'로 변경
+		String idx = (String) map.get("idx");
+		reviewService.reviewaitingNo(idx);
+		
+		reviewService.reviewNoInsert(map);
+		
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	//검토대기 리스트 페이지 이동
+	@RequestMapping(value = "/reviewaitinglist.do", method = RequestMethod.GET)
+	public ModelAndView reviewaitinglist(Criteria cri){
+		ModelAndView mav = new ModelAndView();
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(reviewService.countboardListTotal());
+		
+		List<Map<String, Object>> list = reviewService.getBoardPaging(cri);
+		
+		mav.addObject("reviewList", list);
+		mav.addObject("pageMaker", pageMaker);
+		
+		mav.setViewName("/waitingreview/reviewaitinglist");
+		return mav;
+	}
 }

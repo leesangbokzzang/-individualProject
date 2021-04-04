@@ -44,9 +44,66 @@
 			#{idx}
 			,#{user_name}
 			,#{revappro}
-			,#{reviewaiting}
+			,'Y'
 			,#{review_cont}
 		)
 	</insert>
+	
+	<update id="reviewaitingNo" parameterType="String">
+		update vacation_tbl set
+		reviewaiting = 'D'
+		where idx = #{idx}
+	</update>
+	
+	<insert id="reviewNoInsert" parameterType="map">
+		insert into vctpayment_tbl(
+			  idx
+			, reviewers
+			, revreturn
+			, reviewaiting
+			, review_cont
+		)
+		values(
+			#{idx},
+			#{user_name},
+			#{revappro},
+			'D',
+			#{review_cont}
+		)
+	</insert>
+	
+	<select id="getBoardPaging" parameterType="hashmap" resultType="hashmap">
+		select 
+			DATE_FORMAT(vt.regdate, '%Y-%m-%d') as regdate
+			,pi.TEAM_NM as team_nm
+			,CONCAT(pi.USER_NM, " ", vt.user_position ) as sabun
+			,CONCAT(pi2.USER_NM, " ", cc.DC ) as approv
+		FROM vacation_tbl vt
+		LEFT OUTER JOIN person_info pi
+		ON vt.sabun = pi.sabun
+		LEFT OUTER JOIN person_info pi2
+		ON vt.approver  = pi2.sabun
+		left outer join common_code cc
+		on pi2.USER_POSITION  = cc.CODE 
+		WHERE reviewaiting = 'N'
+		limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="countboardListTotal" resultType="int">
+		select 
+			count(*)
+		from vacation_tbl
+		where reviewaiting = 'N'
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

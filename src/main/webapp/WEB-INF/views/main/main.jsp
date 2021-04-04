@@ -60,7 +60,7 @@
                                 <h3>검토대기현황</h3>
                                 <div class="btn-more">
                                     <ul>
-                                        <li><a href="#" title=" 검토대기현황 더보기" class=""><img src="../../resources/img/common/btn-more.png" alt="더보기"></a></li>
+                                        <li><a href="/reviewaitinglist.do" title=" 검토대기현황 더보기" class=""><img src="../../resources/img/common/btn-more.png" alt="더보기"></a></li>
                                     </ul>
                                 </div>
                             </div>

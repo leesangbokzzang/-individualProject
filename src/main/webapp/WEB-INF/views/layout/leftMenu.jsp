@@ -80,7 +80,7 @@
                     <li>
                         <a href="#" title="검토" class="lnb-dep1">검토</a>
                         <ul class="lnb-dep2">
-                            <li><a href="#" title="검토대기">검토대기</a></li>
+                            <li><a href="/reviewaitinglist.do" title="검토대기">검토대기</a></li>
                             <li><a href="#" title="검토현황">검토현황</a></li>
                         </ul>
                     </li>
