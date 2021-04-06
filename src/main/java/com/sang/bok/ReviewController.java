@@ -89,4 +89,22 @@ public class ReviewController {
 		mav.setViewName("/waitingreview/reviewaitinglist");
 		return mav;
 	}
+	
+	//검토대기 리스트 페이지 이동
+	@RequestMapping(value = "/reviewStatus.do", method = RequestMethod.GET)
+	public ModelAndView reviewStatus(Criteria cri){
+		ModelAndView mav = new ModelAndView();
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(reviewService.reviewStatusListTotal());
+		
+		List<Map<String, Object>> list = reviewService.getReviewStatusList(cri);
+		
+		mav.addObject("revStatusList", list);
+		mav.addObject("pageMaker", pageMaker);
+		
+		mav.setViewName("/waitingreview/reviewStatus");
+		return mav;
+	}
 }

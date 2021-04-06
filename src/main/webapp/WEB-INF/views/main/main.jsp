@@ -6,6 +6,10 @@
 	function getReviewOne(listNum){
 		location.href="/waitingReview.do?idx="+listNum;
 	}
+	
+	function getApproverOne(listNum){
+		location.href="/waitingApprover.do?idx="+listNum;
+	}
 </script>
     <div class="sub-main-wrap">
         <%@ include file="../layout/leftMenu.jsp"%>
@@ -138,7 +142,7 @@
 		                                        	<tr>
 		                                        		<td>${approverList.regdate}</td>
 		                                        		<td>${approverList.sabun} ${approverList.position}</td>
-		                                        		<td><a href="javascript:getReviewOne(${approverList.idx})">휴가신청서</a></td>
+		                                        		<td><a href="javascript:getApproverOne(${approverList.idx})">휴가신청서</a></td>
 		                                        	</tr>
                                         		</c:forEach>
                                     		</c:otherwise>

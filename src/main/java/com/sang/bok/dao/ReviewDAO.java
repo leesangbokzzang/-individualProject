@@ -34,6 +34,12 @@ public interface ReviewDAO {
 	//게시글 총 갯수 불러오기
 	public int countboardListTotal();
 	
+	//검토현황 리스트 
+	public List<Map<String, Object>> getReviewStatusList(Criteria cri);
+	
+	//검토현황 총개수
+	public int reviewStatusListTotal();
+	
 
 	
 }

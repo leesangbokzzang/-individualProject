@@ -64,6 +64,18 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return result;
 	}
 
+	@Override
+	public List<Map<String, Object>> getReviewStatusList(Criteria cri) {
+		List<Map<String, Object>> list = sqlSession.selectList("review.getReviewStatusList", cri);
+		return list;
+	}
+
+	@Override
+	public int reviewStatusListTotal() {
+		int result = sqlSession.selectOne("review.reviewStatusListTotal");
+		return result;
+	}
+
 	
 
 

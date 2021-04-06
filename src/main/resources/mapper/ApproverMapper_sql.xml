@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="review">
-	<select id="getReviewOne" parameterType="int" resultType="map">
+<mapper namespace="approver">
+	<select id="getVacationView" parameterType="int" resultType="map">
 		select 
 			 vt.idx
 			,vt.sabun
@@ -15,62 +15,73 @@
 			,vt.vacation_stt
 			,vt.vacation_end
 			,vt.emrgn_num
-			,pi2.USER_NM 
+			,CONCAT(pi2.USER_NM, " ", cc.DC) as reviewers
+			,vpt.revappro as revappro
 			,DATE_FORMAT(vt.regdate, '%Y.%m.%d') as regdate
 		FROM vacation_tbl vt
 		LEFT OUTER JOIN person_info pi
 		ON vt.sabun = pi.sabun
 		LEFT OUTER JOIN person_info pi2
 		ON vt.reviewers  = pi2.sabun
-		WHERE idx = #{idx}
+		LEFT OUTER JOIN common_code cc
+		ON cc.CODE  = pi2.USER_POSITION
+		LEFT OUTER JOIN vctpayment_tbl vpt
+		ON vpt.idx  = vt.idx 
+		WHERE vt.idx = #{idx}
 	</select>
 	
-	
-	<update id="reviewaitingUpdate" parameterType="String">
+	<update id="approverWaitingUpdate" parameterType="String">
 		update vacation_tbl set
-		reviewaiting = 'Y'
+		approverwaiting = 'Y'
 		where idx = #{idx}
 	</update>
 	
-	<insert id="reviewOkInsert" parameterType="map">
-		insert into vctpayment_tbl(
+	<insert id="approverOkInsert" parameterType="map">
+		insert into vctapprover_tbl(
 			idx
-			,reviewers
-			,revappro
-			,reviewaiting
-			,review_cont
+			,approved
+			,aprvlAprvl
+			,approverwaiting
+			,approver_cont
 		)
 		values(
 			#{idx}
 			,#{user_name}
-			,#{revappro}
+			,#{aprvlAprvl}
 			,'Y'
-			,#{review_cont}
+			,#{approver_cont}
 		)
 	</insert>
 	
-	<update id="reviewaitingNo" parameterType="String">
+	<update id="approverWaitingNo" parameterType="String">
 		update vacation_tbl set
-		reviewaiting = 'D'
+		approverwaiting = 'D'
 		where idx = #{idx}
 	</update>
 	
-	<insert id="reviewNoInsert" parameterType="map">
-		insert into vctpayment_tbl(
+	<insert id="approverNoInsert" parameterType="map">
+		insert into vctapprover_tbl(
 			  idx
-			, reviewers
-			, revreturn
-			, reviewaiting
-			, review_cont
+			, approved
+			, aprvlreturn
+			, approverwaiting
+			, approver_cont
 		)
 		values(
 			#{idx},
 			#{user_name},
-			#{revappro},
+			#{aprvlAprvl},
 			'D',
-			#{review_cont}
+			#{approver_cont}
 		)
 	</insert>
+	
+	<select id="countboardListTotal" resultType="int">
+		select 
+			count(*)
+		from vacation_tbl
+		where reviewaiting = 'Y'
+	</select>
 	
 	<select id="getBoardPaging" parameterType="hashmap" resultType="hashmap">
 		select 
@@ -85,42 +96,31 @@
 		ON vt.approver  = pi2.sabun
 		left outer join common_code cc
 		on pi2.USER_POSITION  = cc.CODE 
-		WHERE reviewaiting = 'N'
+		WHERE vt.reviewaiting = 'Y'
 		limit #{pageStart}, #{perPageNum}
 	</select>
 	
-	<select id="countboardListTotal" resultType="int">
-		select 
-			count(*)
-		from vacation_tbl
-		where reviewaiting = 'N'
-	</select>
-	
-	<select id="getReviewStatusList" parameterType="hashmap" resultType="hashmap">
+	<select id="getApproverStatusList" parameterType="hashmap" resultType="hashmap">
 		select 
 			DATE_FORMAT(vt.regdate, '%Y-%m-%d') as regdate
 			,CONCAT(pi.USER_NM, " ", vt.user_position ) as sabun
-			,vpt.revappro as revappro
-			,vpt.revreturn as revreturn
-		FROM vacation_tbl vt
+			,vpt.reviewers as reviewers
+			,vat.aprvlAprvl as aprvlAprvl
+			,vat.aprvlreturn as aprvlreturn
+		from vacation_tbl vt 
 		LEFT OUTER JOIN person_info pi
 		ON vt.sabun = pi.sabun
 		left outer join vctpayment_tbl vpt
-		on vt.idx = vpt.idx
-		where vpt.reviewaiting not in ('N')
+		on vpt.idx = vt.idx
+		left outer join vctapprover_tbl vat
+		on vat.idx = vt.idx
+		where vt.reviewaiting ='Y'
+		and vt.approverwaiting not in('N')
 	</select>
-	
-	<select id="reviewStatusListTotal" resultType="int">
+	<select id="approverStatusListTotal" resultType="int">
 		select 
 			count(*)
 		from vacation_tbl
 		where reviewaiting not in ('N') 
 	</select>
-	
-	
-	
-	
-	
-	
-	
 </mapper>

@@ -25,12 +25,17 @@ public interface ReviewService {
 	//검토대기 리스트
 	public Object getReviewList();
 	
-	
 	//검토대기 페이징 처리
 	public List<Map<String, Object>> getBoardPaging(Criteria cri);
 	
 	//게시글 총갯수 불러오기
 	public int countboardListTotal();
+	
+	//검토현황 리스트 
+	public List<Map<String, Object>> getReviewStatusList(Criteria cri);
+	
+	//검토현황리스트 총개수
+	public int reviewStatusListTotal();
 
 	
 

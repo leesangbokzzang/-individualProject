@@ -2,12 +2,14 @@ package com.sang.bok.serviceImpl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sang.bok.daoImpl.UserStatusDAOImpl;
 import com.sang.bok.service.UserStatusService;
+import com.sang.bok.vo.Criteria;
 
 @Service
 public class UserStatusServiceImpl implements UserStatusService{
@@ -49,6 +51,23 @@ public class UserStatusServiceImpl implements UserStatusService{
 	public int UserPwdResetFm(HashMap<String, Object> map) {
 		int result = UserStatusDAO.UserPwdResetFm(map);
 		return result;
+	}
+
+	@Override
+	public int userStatusListTotal() {
+		int result = UserStatusDAO.userStatusListTotal();
+		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> getUserStatusList(Criteria cri) {
+		List<Map<String, Object>> list = UserStatusDAO.getUserStatusList(cri);
+		return list;
+	}
+
+	public List<Map<String, Object>> getuserStatusList(HashMap<String, Object> list) {
+		List<Map<String, Object>> userList = UserStatusDAO.getuserStatusList(list);
+		return userList;
 	}
 
 	

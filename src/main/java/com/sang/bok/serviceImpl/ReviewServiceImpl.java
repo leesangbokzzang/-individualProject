@@ -65,6 +65,18 @@ public class ReviewServiceImpl implements ReviewService {
 		return result;
 	}
 
+	@Override
+	public List<Map<String, Object>> getReviewStatusList(Criteria cri) {
+		List<Map<String, Object>> list = reviewDAO.getReviewStatusList(cri);
+		return list;
+	}
+
+	@Override
+	public int reviewStatusListTotal() {
+		int result = reviewDAO.reviewStatusListTotal();
+		return result;
+	}
+
 	
 
 

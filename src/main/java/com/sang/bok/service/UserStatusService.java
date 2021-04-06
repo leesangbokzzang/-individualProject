@@ -2,6 +2,9 @@ package com.sang.bok.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.sang.bok.vo.Criteria;
 
 public interface UserStatusService {
 	
@@ -22,6 +25,12 @@ public interface UserStatusService {
 	
 	//암호초기화
 	public int UserPwdResetFm(HashMap<String, Object> map);
+	
+	//사용자현황 count
+	public int userStatusListTotal();
+	
+	//사용자현황 리스트
+	public List<Map<String, Object>> getUserStatusList(Criteria cri);
 	
 	
 }

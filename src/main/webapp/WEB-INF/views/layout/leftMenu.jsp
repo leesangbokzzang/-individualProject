@@ -81,22 +81,21 @@
                         <a href="#" title="검토" class="lnb-dep1">검토</a>
                         <ul class="lnb-dep2">
                             <li><a href="/reviewaitinglist.do" title="검토대기">검토대기</a></li>
-                            <li><a href="#" title="검토현황">검토현황</a></li>
+                            <li><a href="/reviewStatus.do" title="검토현황">검토현황</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#" title="승인" class="lnb-dep1">승인</a>
                         <ul class="lnb-dep2">
-                            <li><a href="#" title="승인대기">승인대기</a></li>
-                            <li><a href="#" title="승인현황">승인현황</a></li>
+                            <li><a href="/approverWaitinglist.do" title="승인대기">승인대기</a></li>
+                            <li><a href="/approverStatus.do" title="승인현황">승인현황</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#" title="시스템관리" class="lnb-dep1">시스템관리</a>
                         <ul class="lnb-dep2">
-                            <li><a href="userStatus.do" title="사용자현황">사용자현황</a></li>
+                            <li><a href="/topage.do" title="사용자현황">사용자현황</a></li>
                             <li><a href="#" title="개인정보변경">개인정보변경</a></li>
-                            <li><a href="#" title="코드관리">코드관리</a></li>
                         </ul>
                     </li>
                     <li style="display:flex; justify-content: space-between; margin-top: 8px;">

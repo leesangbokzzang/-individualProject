@@ -79,4 +79,39 @@
 			PASSWORD = #{password}
 		where SABUN = #{sabun}
 	</update>
+	
+	<select id="userStatusListTotal" resultType="int">
+		select 
+			count(*) 
+		from person_info
+	</select>
+	
+	<select id="getUserStatusList" parameterType="hashmap" resultType="hashmap">
+		select 
+			SABUN,
+			USER_NM ,
+			cc.DC as position,
+			TEAM_NM ,
+			PHONENUM 
+		from person_info pi
+		left outer join common_code cc
+		on pi.USER_POSITION = cc.CODE
+		order by pi.USER_POSITION desc
+		limit #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="getuserStatusList" parameterType="hashmap" resultType="hashmap">
+		select 
+			SABUN,
+			USER_NM ,
+			cc.DC as position,
+			TEAM_NM ,
+			PHONENUM 
+		from person_info pi
+		left outer join common_code cc
+		on pi.USER_POSITION = cc.CODE
+		where pi.USER_NM like concat('%', #{user_nm}, '%')
+		order by pi.USER_POSITION desc
+		limit #{pageStart}, #{perPageNum}
+	</select>
 </mapper>

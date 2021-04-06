@@ -1,8 +1,12 @@
 package com.sang.bok;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sang.bok.security.UserSha256;
 import com.sang.bok.serviceImpl.CommonCodeServiceImpl;
 import com.sang.bok.serviceImpl.UserStatusServiceImpl;
+import com.sang.bok.util.PageMaker;
+import com.sang.bok.vo.Criteria;
 
 @Controller
 public class UserStatusController {
@@ -24,6 +30,21 @@ public class UserStatusController {
 	
 	@Autowired
 	private UserStatusServiceImpl UserStatusService;
+	
+	@RequestMapping(value="/topage.do", method=RequestMethod.GET)
+	public ModelAndView topage(HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+		int grade = (int) session.getAttribute("grade");
+		if(grade == 1){
+			mav.setViewName("redirect:/userStatus.do");
+		}else if(grade == 0){
+			mav.setViewName("redirect:/userStatusDef.do");
+		}
+		
+		return mav;
+	}
 	
 	@RequestMapping(value="/userStatus.do", method=RequestMethod.GET)
 	public ModelAndView userStatus(){
@@ -114,9 +135,43 @@ public class UserStatusController {
 		return map;
 	}
 	
+	@RequestMapping(value="/userStatusDef.do", method=RequestMethod.GET)
+	public ModelAndView userStatusDef(Criteria cri){
+		ModelAndView mav = new ModelAndView();
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(UserStatusService.userStatusListTotal());
+		
+		List<Map<String, Object>> userList = UserStatusService.getUserStatusList(cri);
+		
+		mav.addObject("userStatusList", userList);
+		mav.addObject("pageMaker", pageMaker);
+		mav.setViewName("system_mgm/userStatusDef");
+		return mav;
+	}
 	
-	
-	
+	@RequestMapping(value="/userStatusSearch.do", method=RequestMethod.POST)
+	public ModelAndView userStatusSearch(HttpServletRequest request, Criteria cri){
+		ModelAndView mav = new ModelAndView();
+		
+		String user_nm = request.getParameter("sear_nm");
+		int pageStart = cri.getPageStart();
+		int perPageNum = cri.getPerPageNum();
+		
+		System.out.println(user_nm);
+		HashMap<String, Object> list = new HashMap<String, Object>();
+		
+		list.put("pageStart", pageStart);
+		list.put("perPageNum", perPageNum);
+		list.put("user_nm", user_nm);
+		
+		List<Map<String, Object>> userList = UserStatusService.getuserStatusList(list);
+		
+		mav.addObject("userStatusList", userList);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
 	
 	
 }
