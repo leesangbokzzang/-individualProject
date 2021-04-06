@@ -144,7 +144,7 @@ public class UserStatusController {
 		
 		List<Map<String, Object>> userList = UserStatusService.getUserStatusList(cri);
 		
-		mav.addObject("userStatusList", userList);
+		mav.addObject("userStatusList2", userList);
 		mav.addObject("pageMaker", pageMaker);
 		mav.setViewName("system_mgm/userStatusDef");
 		return mav;
@@ -167,6 +167,7 @@ public class UserStatusController {
 		
 		List<Map<String, Object>> userList = UserStatusService.getuserStatusList(list);
 		
+
 		mav.addObject("userStatusList", userList);
 		mav.setViewName("jsonView");
 		

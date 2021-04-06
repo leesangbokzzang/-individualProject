@@ -4,7 +4,7 @@
 <%@ include file="../layout/header.jsp"%>
 <script>
 	$(function(){
-		searchName();
+		//searchName();
 	})
 	function searchName(){
 		
@@ -115,7 +115,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="search_List">
-                                    	<c:forEach var="userStatusList" items="${userStatusList}">
+                                    	<c:forEach var="userStatusList" items="${userStatusList2}">
                                     		<tr>
                                     			<td>${userStatusList.SABUN}</td>
                                     			<td>${userStatusList.USER_NM}</td>
