@@ -70,6 +70,25 @@ public class UserStatusServiceImpl implements UserStatusService{
 		return userList;
 	}
 
+	public int getPwdCheck(HashMap<String, Object> map) {
+		int result = UserStatusDAO.getPwdCheck(map);
+		return result;
+	}
+
+	public void pwdChange(HashMap<String, Object> map) {
+		UserStatusDAO.pwdChange(map);
+	}
+
+	public int userCount(String searchName) {
+		int userCount = UserStatusDAO.userCount(searchName);
+		return userCount;
+	}
+
+	public List<Map<String, Object>> listPage(int displayPost, int postNum, String searchName) {
+		List<Map<String, Object>> listPage = UserStatusDAO.listPage(displayPost, postNum, searchName);
+		return listPage;
+	}
+
 	
 	
 	

@@ -59,7 +59,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="reviewList" items="${reviewList}">
+                                    <c:choose>
+                                    	<c:when test="${empty reviewList}">
+                                    		<td colspan="6">검토대기 목록이 없습니다.</td>
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    		<c:forEach var="reviewList" items="${reviewList}">
                                         	<tr>
                                         		<td>${reviewList.regdate}</td>
                                         		<td>휴가신청서</td>
@@ -68,6 +73,8 @@
                                         		<td>${reviewList.approv}</td>
                                         	</tr>
                                         </c:forEach>
+                                    	</c:otherwise>
+                                   		</c:choose>
                                     </tbody>
                                 </table>
                             </div>

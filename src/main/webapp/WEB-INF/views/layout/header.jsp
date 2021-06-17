@@ -15,25 +15,34 @@
 
 	<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
-    <title>HCNC 결재시스템</title>
+    <title>결재시스템</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="../resources/css/import.css" id="lightCss"/>
-<!-- 	<link rel="stylesheet" type="text/css" href="../resources/dark/dark.css" id="darkCss"/> -->
-    <script src="../resources/js/jquery-1.9.1.js"></script>
+	<link type="text/css" rel="stylesheet" href="../resources/css/ui.jqgrid.css"/>
+	<link type="text/css" rel="stylesheet" href="../resources/css/jquery-ui.css"/>
+	
+<!-- 	<script src="../resources/js/jquery-1.9.1.js"></script> -->
+	<script src="../resources/js/jquery-1.7.2.min.js"></script>
+	<script src="../resources/js/grid.locale-en.js"></script>
+	<script src="../resources/js/jquery.jqGrid.min.js"></script>
+	<script src="../resources/js/jquery-ui.js"></script>
+	<script src="../resources/js/jquery.multi-select.js"></script>
+	
+	
+	<script src="../resources/js/sweetalert.min.js"></script>
+<!--     <script src="https://code.jquery.com/jquery-latest.js"></script> -->
     <script src="../resources/js/script.js"></script>
-    <script src="../resources/js/sweetalert.min.js"></script>
-    <script src="https://code.jquery.com/jquery-latest.js"></script>
-    
+ 
     
     <!-- datepicker 외부링크 -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!--      <link rel="stylesheet" href="/resources/demos/style.css"> -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--      <link rel="stylesheet" href="/resources/demos/style.css"> -->
+<!--     <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
     <style>
     	
     </style>

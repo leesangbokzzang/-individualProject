@@ -59,7 +59,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="revStatusList" items="${revStatusList}">
+                                    	<c:choose>
+                                    	<c:when test="${empty revStatusList}">
+                                    		<td colspan="6">검토현황 목록이 없습니다.</td>
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    		<c:forEach var="revStatusList" items="${revStatusList}">
                                         	<tr>
                                         		<td>${revStatusList.regdate}</td>
                                         		<td>휴가신청서</td>
@@ -68,6 +73,8 @@
                                         		<td>${revStatusList.revreturn}</td>
                                         	</tr>
                                         </c:forEach>
+                                    	</c:otherwise>
+                                   		</c:choose>
                                     </tbody>
                                 </table>
                             </div>

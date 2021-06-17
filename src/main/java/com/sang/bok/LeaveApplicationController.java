@@ -27,7 +27,7 @@ public class LeaveApplicationController {
 	private VacationService vacationService;
 	
 	@RequestMapping(value="/leaveApplication.do", method=RequestMethod.GET)
-	public ModelAndView leaveApplication(){
+	public ModelAndView leaveApplication() throws Throwable{
 		ModelAndView mav = new ModelAndView();
 		
 		//사용자검색 팝업창 유저리스트

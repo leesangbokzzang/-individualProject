@@ -68,6 +68,31 @@ public class UserStatusDAOImpl implements UserStatusDAO{
 		List<Map<String, Object>> userList = sqlSession.selectList("userStatusSql.getuserStatusList", list);
 		return userList;
 	}
+
+	public int getPwdCheck(HashMap<String, Object> map) {
+		int result = sqlSession.selectOne("userStatusSql.getPwdCheck", map);
+		return result;
+	}
+
+	public void pwdChange(HashMap<String, Object> map) {
+		sqlSession.update("userStatusSql.setPwdChange", map);
+	}
+
+	public int userCount(String searchName) {
+		int userCount = sqlSession.selectOne("userStatusSql.userCount", searchName);
+		return userCount;
+	}
+
+	public List<Map<String, Object>> listPage(int displayPost, int postNum, String searchName) {
+		HashMap<String, Object> data = new HashMap<>();
+		
+		data.put("displayPost", displayPost);
+		data.put("postNum", postNum);
+		data.put("searchName", searchName);
+		
+		List<Map<String, Object>> listPage = sqlSession.selectList("userStatusSql.listPage", data);
+		return listPage;
+	}
 	
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -104,8 +105,8 @@ public class UserStatusController {
 	public ModelAndView userUpdatefm(@RequestBody HashMap<String, Object> hashMap){
 		ModelAndView map = new ModelAndView();
 		
-		String changePwd = UserSha256.encrypt((String)hashMap.get("password"));
-		hashMap.put("password", changePwd);
+		//String changePwd = UserSha256.encrypt((String)hashMap.get("password"));
+		//hashMap.put("password", changePwd);
 		
 		map.addObject("result", UserStatusService.UserUpdateFm(hashMap));
 		map.setViewName("jsonView");
@@ -129,6 +130,10 @@ public class UserStatusController {
 	@RequestMapping(value="userPwdResetfm.do", method = RequestMethod.POST)
 	public ModelAndView userPwdResetfm(@RequestBody HashMap<String, Object> hashMap){
 		ModelAndView map = new ModelAndView();
+		
+		String changePwd = UserSha256.encrypt((String)hashMap.get("password"));
+		hashMap.put("password", changePwd);
+		
 		map.addObject("result", UserStatusService.UserPwdResetFm(hashMap));
 		map.setViewName("jsonView");
 		
@@ -138,41 +143,106 @@ public class UserStatusController {
 	@RequestMapping(value="/userStatusDef.do", method=RequestMethod.GET)
 	public ModelAndView userStatusDef(Criteria cri){
 		ModelAndView mav = new ModelAndView();
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(UserStatusService.userStatusListTotal());
-		
-		List<Map<String, Object>> userList = UserStatusService.getUserStatusList(cri);
-		
-		mav.addObject("userStatusList2", userList);
-		mav.addObject("pageMaker", pageMaker);
+//		PageMaker pageMaker = new PageMaker();
+//		pageMaker.setCri(cri);
+//		pageMaker.setTotalCount(UserStatusService.userStatusListTotal());
+//		
+//		List<Map<String, Object>> userList = UserStatusService.getUserStatusList(cri);
+//		
+//		mav.addObject("userStatusList2", userList);
+//		mav.addObject("pageMaker", pageMaker);
 		mav.setViewName("system_mgm/userStatusDef");
 		return mav;
 	}
 	
-	@RequestMapping(value="/userStatusSearch.do", method=RequestMethod.POST)
-	public ModelAndView userStatusSearch(HttpServletRequest request, Criteria cri){
+	@RequestMapping(value="/userStatusSearch.do", method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView userStatusSearch(@RequestParam(value="num", defaultValue="1") int num, HttpServletRequest request) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		
-		String user_nm = request.getParameter("sear_nm");
-		int pageStart = cri.getPageStart();
-		int perPageNum = cri.getPerPageNum();
+		String searchName = request.getParameter("sear_nm");
 		
-		System.out.println(user_nm);
-		HashMap<String, Object> list = new HashMap<String, Object>();
+		//검색한 총 유저 수
+		int userCount = UserStatusService.userCount(searchName);
 		
-		list.put("pageStart", pageStart);
-		list.put("perPageNum", perPageNum);
-		list.put("user_nm", user_nm);
+		//한페이지에 출력할 유저 갯수
+		//int postNum = Integer.parseInt(viewNum);
+		int postNum = 5;
 		
-		List<Map<String, Object>> userList = UserStatusService.getuserStatusList(list);
+		//하단 페이지 번호
+		int pageNum = (int)Math.ceil((double)userCount/postNum);
 		
-
-		mav.addObject("userStatusList", userList);
+		int displayPost = (num - 1)*postNum;
+		
+		List<Map<String, Object>> list = UserStatusService.listPage(displayPost, postNum, searchName);
+		
+		
+		mav.addObject("userStatusList", list);
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("num", num);
 		mav.setViewName("jsonView");
-		
 		return mav;
 	}
 	
+	@RequestMapping(value="/userInfoUpdateFm.do", method=RequestMethod.GET)
+	public ModelAndView userInfoUpdateFm(Criteria cri){
+		ModelAndView mav = new ModelAndView();
+		
+		List<Map<String, Object>> userList = UserStatusService.getUserStatusList(cri);
+		
+		mav.setViewName("system_mgm/userInfoUpdateFm");
+		return mav;
+	}
+	
+	@RequestMapping(value="/pwdInspection.do", method=RequestMethod.POST)
+	public ModelAndView pwdInspection(@RequestParam HashMap<String, Object> map){
+		ModelAndView mav = new ModelAndView();
+		String sabun = (String) map.get("sabun");
+		String pwd   = (String) map.get("pwd");
+		
+		String changePwd = UserSha256.encrypt((String)map.get("pwd"));
+		map.put("pwd", changePwd);
+		
+		System.out.println(sabun);
+		System.out.println(changePwd);
+		
+		int result  = UserStatusService.getPwdCheck(map);
+		
+		mav.addObject("result", result);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="/pwdChange.do", method=RequestMethod.POST)
+	public ModelAndView pwdChange(@RequestParam HashMap<String, Object> map) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		
+		String pwd   = (String) map.get("pwd");
+		
+		String changePwd = UserSha256.encrypt((String)map.get("pwd"));
+		map.put("pwd", changePwd);
+		
+		UserStatusService.pwdChange(map);
+		
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	//jqGrid 활용해서 게시판 만들기
+	@RequestMapping(value="/jqgridFm.do", method=RequestMethod.GET)
+	public String jqgridFm() throws Exception {
+		
+		return "system_mgm/userInfoUpdateFm2";
+	}
+	
+	@RequestMapping(value="/jqGridList.do", method=RequestMethod.POST)
+	public ModelAndView jqGridList(HttpServletRequest req) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		
+		String userNm = req.getParameter("userNm");
+		
+		System.out.println("Parameter : "+userNm);
+		
+		return mav;
+	}
 	
 }

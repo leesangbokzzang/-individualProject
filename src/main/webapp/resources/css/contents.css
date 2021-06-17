@@ -57,7 +57,7 @@ section .section-tit h3{font-size: 18px; font-weight: 800; color: #333;}
 .lnb-menu ul li a.lnb-dep1{background: url(../img/common/lnb-ico-down.png)#f7f7f7 no-repeat 95% 50%; display: inline-block; width:100%; border-radius: 10px; padding: 10px 22px 10px 20px; color: #333; font-size:15px; font-weight: 600; border:0;}
 .lnb-menu ul.lnb-dep2 {max-width:220px; margin-left:30px; padding-top:7px; display:none;}
 .lnb-menu ul.lnb-dep2 li {position: relative;}
-.lnb-menu ul.lnb-dep2 li::before {content:""; width:1px; height:100%; display: inline-block; background-color:#e6e6e6; position: absolute; margin-left:-1px; margin-top:-7px;}
+.lnb-menu ul.lnb-dep2 li::before {content:""; width:2px; height:100%; display: inline-block; background-color:#e6e6e6; position: absolute; margin-left:-1px; margin-top:-7px;}
 .lnb-menu ul.lnb-dep2 li:last-child::before {height:24px;}
 .lnb-menu ul.lnb-dep2 li > a::before {content: ""; display: inline-block; background:url(../img/common/lnb-list-dot.png)no-repeat center center; width:20px; height:12px; margin-right:4px;}
 .lnb-menu ul.lnb-dep2 li a:hover {color:#3b79b6;}

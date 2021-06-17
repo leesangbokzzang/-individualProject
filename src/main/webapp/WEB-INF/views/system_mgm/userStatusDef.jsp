@@ -4,7 +4,7 @@
 <%@ include file="../layout/header.jsp"%>
 <script>
 	$(function(){
-		//searchName();
+		searchName();
 	})
 	function searchName(){
 		
@@ -29,6 +29,14 @@
 					
 				});
 				$(".search_List").html(output);
+				
+// 				var output2 = "";
+// 				$.each(result, function(index, item){
+// 					output2 += '<span>';
+// 				  	output2 += '<a href="/userStatusSearch.do?num='+item+'">'+ item +'</a>';
+// 				  	output2 += '</span>';
+// 				});
+// 				$(".btn-paging").html(output2);
 				
 			},
 			error : function(error){
@@ -115,7 +123,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="search_List">
-                                    	<c:forEach var="userStatusList" items="${userStatusList2}">
+                                    	<!--<c:forEach var="userStatusList" items="${userStatusList}">
                                     		<tr>
                                     			<td>${userStatusList.SABUN}</td>
                                     			<td>${userStatusList.USER_NM}</td>
@@ -123,29 +131,34 @@
                                     			<td>${userStatusList.TEAM_NM}</td>
                                     			<td>${userStatusList.PHONENUM}</td>
                                     		</tr>
-                                    	</c:forEach>
+                                    	</c:forEach>-->
                                     </tbody>
                                 </table>
                             </div>
                             <div class="btn-paging btn-pageing-bg">
-                            	<ul>
-                            		<c:if test="${pageMaker.prev}">
-                            			<li>
-                                        	<a href="<c:url value='/userStatusDef.do?page=${pageMaker.startPage-1}'/>" title="이전"><img src="../resources/img/sub/btn-prev.png" alt="이전"></a>
-                                    	</li>
-                            		</c:if>
-                            		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
-                            			<li>
-                                        	<a href="<c:url value='/userStatusDef.do?page=${pageNum}'/>" title="더보기">${pageNum}</a>
-                                   		 </li>
-                            		</c:forEach>
-                            		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                            			<li>
-                                       		<a href="/userStatusDef.do?page=${pageMaker.endPage+1}" title="다음"><img src="../resources/img/sub/btn-next.png" alt="다음"></a>
-                                    	</li>
-                            		</c:if>
-                            	</ul>
+<!--                             	<ul> -->
+<%--                             		<c:if test="${pageMaker.prev}"> --%>
+<!--                             			<li> -->
+<%--                                         	<a href="<c:url value='/userStatusDef.do?page=${pageMaker.startPage-1}'/>" title="이전"><img src="../resources/img/sub/btn-prev.png" alt="이전"></a> --%>
+<!--                                     	</li> -->
+<%--                             		</c:if> --%>
+<%--                             		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum"> --%>
+<!--                             			<li> -->
+<%--                                         	<a href="<c:url value='/userStatusDef.do?page=${pageNum}'/>" title="더보기">${pageNum}</a> --%>
+<!--                                    		 </li> -->
+<%--                             		</c:forEach> --%>
+<%--                             		<c:if test="${pageMaker.next && pageMaker.endPage > 0}"> --%>
+<!--                             			<li> -->
+<%--                                        		<a href="/userStatusDef.do?page=${pageMaker.endPage+1}" title="다음"><img src="../resources/img/sub/btn-next.png" alt="다음"></a> --%>
+<!--                                     	</li> -->
+<%--                             		</c:if> --%>
+<!--                             	</ul> -->
                             </div>
+						<c:forEach begin="1" end="${pageNum}" var="num">
+						  <span>
+						  	<a href="/userStatusSearch.do?num=${num}">${num}</a>
+						  </span>
+						</c:forEach>
                         </section>                        
                     </div>
                     </form>

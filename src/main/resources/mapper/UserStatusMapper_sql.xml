@@ -58,7 +58,6 @@
 	<update id="userUpdate" parameterType="map">
 		update person_info set
 			SABUN = #{sabun}
-			,PASSWORD = #{password}
 			,USER_NM  = #{user_nm}
 			,BIRTH_NUM = #{birth_num}
 			,PHONENUM = #{phonenum}
@@ -97,7 +96,7 @@
 		left outer join common_code cc
 		on pi.USER_POSITION = cc.CODE
 		order by pi.USER_POSITION desc
-		limit #{pageStart}, #{perPageNum}
+		
 	</select>
 	
 	<select id="getuserStatusList" parameterType="hashmap" resultType="hashmap">
@@ -112,6 +111,42 @@
 		on pi.USER_POSITION = cc.CODE
 		where pi.USER_NM like concat('%', #{user_nm}, '%')
 		order by pi.USER_POSITION desc
-		limit #{pageStart}, #{perPageNum}
+		
 	</select>
+	
+	<select id="getPwdCheck" resultType="int">
+		select count(*)
+		from person_info
+		where SABUN  = #{sabun}
+		and PASSWORD  = #{pwd}
+	</select>
+	
+	<update id="setPwdChange" parameterType="map">
+		update PERSON_INFO set
+			PASSWORD = #{pwd}
+		where SABUN = #{sabun}
+	</update>
+	
+	<select id="userCount" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM PERSON_INFO
+		WHERE USER_NM LIKE CONCAT('%', #{sear_nm}, '%')
+	</select>
+	
+	<select id="listPage" parameterType="hashmap" resultType="hashmap">
+		select 
+			SABUN,
+			USER_NM ,
+			cc.DC as position,
+			TEAM_NM ,
+			PHONENUM 
+		from person_info pi
+		left outer join common_code cc
+		on pi.USER_POSITION = cc.CODE
+		WHERE pi.USER_NM LIKE CONCAT('%', #{searchName}, '%')
+		order by pi.USER_POSITION desc
+		limit #{displayPost}, #{postNum}
+	</select>
+	
 </mapper>

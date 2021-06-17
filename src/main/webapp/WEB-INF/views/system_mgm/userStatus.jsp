@@ -180,6 +180,9 @@ function userChkOK(){
 	});
 	var sabun = td.eq(1).text(); //td중에 2번째 td값인 sabun td값 
 	
+	var pwdAttri = document.getElementById("password"); //패스워드 변경은 "개인정보변경 페이지에서만 변경 할 수 있음 관리자도 변경 못함."
+	pwdAttri.removeAttribute("name");
+	
 	var formdate =$("form[name=userSabunFm]").serializeObject();
 	formdate.userSabun = sabun;
 	var jsondata = JSON.stringify(formdate);
@@ -192,7 +195,11 @@ function userChkOK(){
 		data : jsondata,
 		success : function(result){
 			$("#sabun").val(result.result[0].SABUN);
-			$("#password").val(result.result[0].PASSWORD);
+			
+			//주석이유 :: 패스워드는 단방향으로만 암호화시켜야해서 sha-256 사용함
+			// 패스워드는 복호화를 시켜선 절대 안된다 정보보호위반법에 걸리기 때문이다.
+			//양방향으로 암호화시키는 AES-256은 이름, 이메일, 주소를 암호화하였을때 복호화만 한다.
+			//$("#password").val(result.result[0].PASSWORD);
 			$("#phonenum").val(result.result[0].PHONENUM);
 			$("#user_nm").val(result.result[0].USER_NM);
 			$("#birth_num").val(result.result[0].BIRTH_NUM);
@@ -201,8 +208,8 @@ function userChkOK(){
 			$("#team_nm").val(result.result[0].TEAM_NM);
 			
 			$("input[name=userChekBox]").attr('checked', false);//체크해제
-			$("#password").attr('readonly', false);
-			$("#password").css("background", "#fff");
+			//$("#password").attr('readonly', false);
+			//$("#password").css("background", "#fff");
 			$(".modal-wrap2").hide(); //사용자현황 팝업닫기
 			$("#btnUserInsert").hide();
 		},
@@ -338,7 +345,7 @@ function NoMultiChk(chk){
                                             <td>
                                                 <label for="" class="hide">E-mail</label>
                                                 <input type="text" class="wp35" id="email" name="email">
-                                                @hcnc.co.kr
+                                                @sbTeck.com
                                             </td>
                                         </tr>
                                         <!-- <tr>
@@ -373,7 +380,7 @@ function NoMultiChk(chk){
             <!--//sub-container-->
             <footer>
                 <div class="sub-footer">
-                    Copyright © HCNC Corp. All rights Reserved.
+                    Copyright © SBTECK Corp. All rights Reserved.
                 </div>
             </footer>
         </div>

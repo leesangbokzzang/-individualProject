@@ -72,7 +72,7 @@
             <div class="lnb-menu">
                 <ul>
                     <li class="">
-                        <a href="#" title="작성" class="lnb-dep1 on">작성</a>
+                        <a href="#" title="결재현황" class="lnb-dep1 on">결재현황</a>
                         <ul class="lnb-dep2 ">
                             <li><a href="#" title="결재현황">결재현황</a></li>
                         </ul>
@@ -95,7 +95,7 @@
                         <a href="#" title="시스템관리" class="lnb-dep1">시스템관리</a>
                         <ul class="lnb-dep2">
                             <li><a href="/topage.do" title="사용자현황">사용자현황</a></li>
-                            <li><a href="#" title="개인정보변경">개인정보변경</a></li>
+                            <li><a href="/userInfoUpdateFm.do" title="개인정보변경">개인정보변경</a></li>
                         </ul>
                     </li>
                     <li style="display:flex; justify-content: space-between; margin-top: 8px;">

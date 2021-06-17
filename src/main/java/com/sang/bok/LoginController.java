@@ -24,7 +24,7 @@ public class LoginController {
 	private LoginService logoinService;
 	
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
-	public ModelAndView mainMove(HttpSession session){
+	public ModelAndView mainMove(HttpSession session) throws Throwable {
 		ModelAndView mav = new ModelAndView();
 		
 		String sabun = (String) session.getAttribute("sabun");
@@ -92,6 +92,7 @@ public class LoginController {
 				session.setAttribute("phone_num", userVo.getPhonenum());
 				session.setAttribute("user_position", userVo.getUser_position());
 				session.setAttribute("team_nm", userVo.getTeam_nm());
+				session.setAttribute("bir_day", userVo.getBirth_num());
 				session.setAttribute("grade", userVo.getGrade());
 				
 				mav.setViewName("redirect:/main.do");
